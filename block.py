@@ -24,7 +24,7 @@ class Block:
         return (
             "\nIndex: " + str(self.index) +
             "\nTimestamp: " + str(self.timestamp) +
-            "\nTransactions: " + str(self.transactions) +
+            "\nTransactions: " + str([str(t) for t in self.transactions]) +
             "\nPrevious Hash: " + str(self.previous_hash) +
             "\nHash: " + str(self.compute_hash()) +
             "\n----------"
