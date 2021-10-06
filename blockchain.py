@@ -10,7 +10,18 @@ class Blockchain:
         return Block(0, "Genesis", "000")
 
     def add_block(self, block):
+        self.proof_of_work(block)
         self.chain.append(block)
+
+    def proof_of_work(self, block):
+        block.nonce = 0
+        computed_hash = block.compute_hash()
+
+        while not computed_hash.startswith('0' * self.difficulty):
+            block.nonce += 1
+            computed_hash = block.compute_hash()
+
+        return computed_hash
 
     def __str__(self):
         res = ""
