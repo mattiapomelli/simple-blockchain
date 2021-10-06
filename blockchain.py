@@ -10,6 +10,7 @@ class Blockchain:
         return Block(0, "Genesis", "000")
 
     def add_block(self, block):
+        block.previous_hash = self.chain[-1].compute_hash()
         self.proof_of_work(block)
         self.chain.append(block)
 
@@ -27,5 +28,4 @@ class Blockchain:
         res = ""
         for block in self.chain:
             res += str(block)
-        
         return res
