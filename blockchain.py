@@ -5,6 +5,7 @@ class Blockchain:
 
     def __init__(self):
         self.chain = [self.create_genesis_block()]
+        self.pending_transactions = []
 
     def create_genesis_block(self):
         return Block(0, "Genesis", "000")
@@ -23,6 +24,9 @@ class Blockchain:
             computed_hash = block.compute_hash()
 
         return computed_hash
+
+    def add_transaction(self, transaction):
+        self.pending_transactions.append(transaction)
 
     def __str__(self):
         res = ""
