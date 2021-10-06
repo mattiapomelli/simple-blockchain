@@ -6,4 +6,4 @@ b1 = Block(1, 'some data', '111')
 
 blockchain.add_block(b1)
 
-print(blockchain.chain)
+print(blockchain)
