@@ -1,6 +1,4 @@
 from blockchain import Blockchain
-from block import Block
-from transaction import Transaction
 from user import User
 
 user1 = User('mattia')
@@ -12,9 +10,9 @@ print(user3)
 
 blockchain = Blockchain()
 
-t1 = Transaction(user1.username, user2.username, 30)
-t2 = Transaction(user2.username, user3.username, 20)
-t3 = Transaction(user3.username, user1.username, 45)
+t1 = user1.perform_transaction(user2.username, 30)
+t2 = user2.perform_transaction(user3.username, 20)
+t3 = user3.perform_transaction(user1.username, 45)
 
 blockchain.add_transaction(t1)
 blockchain.add_transaction(t2)
