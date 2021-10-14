@@ -1,9 +1,9 @@
 from blockchain import Blockchain
 from user import User
 
-user1 = User('mattia')
-user2 = User('julian')
-user3 = User('lukas')
+user1 = User('mattia', '12345678')
+user2 = User('julian', 'test_test')
+user3 = User('lukas', 'strong_password')
 print(user1)
 print(user2)
 print(user3)
