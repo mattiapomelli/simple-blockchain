@@ -1,3 +1,4 @@
+import uuid
 import json
 from user import User
 
@@ -18,23 +19,32 @@ class UserDB:
         Opens the file representing the db and stores its content in the db attribute
         """
         # TODO: if file is empty create an empty db with "[]"
-        f = open(self.db_path)
-        self.db = json.load(f)
+        file = open(self.db_path)
+        data = json.load(file)
+
+        # convert the users from json to User objects
+        self.db = [User(u['id'], u['username'], u['password']) for u in data]
 
     def create_user(self, username, password):
         """
         Creates a new user and adds it to the database (writes the new list of users to the file)
         Returns the created user
         """
+        # if existing_user is not None:
+        #     print("A user with username" + username + "already exists")
+
         # TODO: encrypt this password with AES
-        new_user = User(username, password)
+        id = str(uuid.uuid4())
+        new_user = User(id, username, password)
 
         # TODO: check that the username doesn't exist already
-        self.db.append(new_user.__dict__)
+        self.db.append(new_user)
 
         # TODO: omptimization: don't rewrite the whole file, but just apped the new user
-        f = open(self.db_path, 'w')
-        json.dump(self.db, f)
+        # convert the users from User objects to json serializable dictionaries
+        file = open(self.db_path, 'w')
+        serialized_db = [u.__dict__ for u in self.db]
+        json.dump(serialized_db, file)
 
         return new_user
 

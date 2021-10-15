@@ -1,4 +1,3 @@
-import uuid
 import json
 from transaction import Transaction
 
@@ -9,13 +8,13 @@ class User:
     and receive money for mining blocks
     """
 
-    def __init__(self, username, password):
+    def __init__(self, id, username, password):
         """
         id: unique identifier of the user
         username: username of the user, is also unique
         password: password of the user
         """
-        self.id = str(uuid.uuid4())
+        self.id = id
         self.username = username
         self.password = password
 
