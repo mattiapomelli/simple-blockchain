@@ -55,5 +55,11 @@ class UserDB:
     def sign_in(self, username, password):
         return
 
+    def __str__(self):
+        res = ""
+        for user in self.db:
+            res += str(user)
+        return res
+
 # user database controller that will be used to perform operations on the db
 users_db = UserDB()

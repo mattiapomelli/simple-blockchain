@@ -3,6 +3,8 @@ from users_db import users_db
 
 user1 = users_db.create_user('mattia', '12345678')
 user2 = users_db.create_user('julian', 'test_test')
+
+print(users_db)
 # user3 = users_db.create_user('lukas', 'strong_password')
 # user4 = users_db.create_user('bob', 'ahahahah')
 # user5 = users_db.create_user('bob', 'das')

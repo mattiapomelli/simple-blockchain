@@ -27,4 +27,4 @@ class User:
         return Transaction(self.username, receiver_username, amount)
 
     def __str__(self):
-        return "Id: " + self.id + ", Username: " + self.username
+        return "Id: " + self.id + ", Username: " + self.username + "\n"
