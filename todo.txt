@@ -1,0 +1,49 @@
+TODO:
+- introduce randomness:
+  - to determine the value of the currency
+  - suggest a random password to the user when signing up
+- use AES: for passwords
+
+FEATURES:
+  Done:
+  - create blocks
+  - create blockchain
+  - create proof of work
+  - create transactions
+
+  To Implement:
+  - sign transactions
+    - digital signatures with private-public key
+    - include a transaction id
+  - deny overspending transactions
+  - introduce users:
+    - calculate user balance
+    - mine rewards
+    - user db: file or sqlite
+  - introduce wallets
+    - wallet addresses
+  - extra verifications:
+    - verify chain function: check that previous hashes are consistent
+    - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
+  - decentralization/distribution
+    - every user has its own copy of the blockchain (can be stored on files with the name/id of the user)
+      - when an user performs a transaction should add it to its own blockchain and then broadcast it to 
+        everyone else
+    - multi-user support: multiple terminals running the application can be opened at the same time
+  - cli:
+    - register/login
+    - make transactions
+    - see your balance
+    - visualize the blockchain
+    - start mining
+  - simulate errors when trying to corrupt data
+
+BUGS:
+- If the file is empty there is an error when reading it (has to be: [])
+
+CODING OPTIMIZATIONS
+- Is User Id needed?
+- move add_user from User init to db function?
+- pass the user data to the userdb_service and get a new user returned, instead
+  of creating first a user and passing it to the userdb_service
+- Make userDB a singleton
