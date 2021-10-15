@@ -30,8 +30,12 @@ class UserDB:
         Creates a new user and adds it to the database (writes the new list of users to the file)
         Returns the created user
         """
-        # if existing_user is not None:
-        #     print("A user with username" + username + "already exists")
+
+        existing_user = next((u for u in self.db if u.username == username), None)
+
+        if existing_user is not None:
+            print("A user with username " + username + " already exists")
+            return
 
         # TODO: encrypt this password with AES
         id = str(uuid.uuid4())
