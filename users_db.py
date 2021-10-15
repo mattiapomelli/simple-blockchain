@@ -1,4 +1,5 @@
 import json
+from user import User
 
 class UserDB:
     """
@@ -20,16 +21,22 @@ class UserDB:
         f = open(self.db_path)
         self.db = json.load(f)
 
-    def create_user(self, user):
+    def create_user(self, username, password):
         """
         Creates a new user and adds it to the database (writes the new list of users to the file)
+        Returns the created user
         """
+        # TODO: encrypt this password with AES
+        new_user = User(username, password)
+
         # TODO: check that the username doesn't exist already
-        self.db.append(user)
+        self.db.append(new_user.__dict__)
 
         # TODO: omptimization: don't rewrite the whole file, but just apped the new user
         f = open(self.db_path, 'w')
         json.dump(self.db, f)
+
+        return new_user
 
     def sign_in(self, username, password):
         return

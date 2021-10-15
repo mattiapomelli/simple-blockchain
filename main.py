@@ -1,9 +1,10 @@
 from blockchain import Blockchain
-from user import User
+from users_db import users_db
 
-user1 = User('mattia', '12345678')
-user2 = User('julian', 'test_test')
-user3 = User('lukas', 'strong_password')
+user1 = users_db.create_user('mattia', '12345678')
+user2 = users_db.create_user('julian', 'test_test')
+user3 = users_db.create_user('lukas', 'strong_password')
+user4 = users_db.create_user('bob', 'ahahahah')
 print(user1)
 print(user2)
 print(user3)

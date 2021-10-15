@@ -1,7 +1,6 @@
 import uuid
 import json
 from transaction import Transaction
-from users_db import users_db
 
 class User:
     """
@@ -18,8 +17,7 @@ class User:
         """
         self.id = str(uuid.uuid4())
         self.username = username
-        self.password = password # TODO: encrypt this password with AES
-        users_db.create_user(self.__dict__)
+        self.password = password
 
     def perform_transaction(self, receiver_username, amount):
         """
