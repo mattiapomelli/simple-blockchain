@@ -48,12 +48,17 @@ class UserDB:
         # convert the users from User objects to json serializable dictionaries
         file = open(self.db_path, 'w')
         serialized_db = [u.__dict__ for u in self.db]
-        json.dump(serialized_db, file)
+        json.dump(serialized_db, file, indent=4)
 
         return new_user
 
     def sign_in(self, username, password):
         return
+
+    def reset(self):
+        file = open(self.db_path, 'w')
+        file.write(str([]))
+        self.db = []
 
     def __str__(self):
         res = ""

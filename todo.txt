@@ -47,3 +47,5 @@ CODING OPTIMIZATIONS
 - pass the user data to the userdb_service and get a new user returned, instead
   of creating first a user and passing it to the userdb_service
 - Make userDB a singleton
+- cache the file as an attribute inside users_db
+- move check of already existing username outside users_db, and there provide a method find_by_username

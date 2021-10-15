@@ -1,1 +1,17 @@
-[{"id": "a3b78f67-84d1-48a9-9502-79945eb10921", "username": "mattia", "password": "12345678"}, {"id": "dc3bbf8e-ea1d-4f66-a0ee-e664d3509e33", "username": "julian", "password": "test_test"}]
+[
+    {
+        "id": "825af06e-ebf4-426d-bb40-9acc8f763709",
+        "username": "mattia",
+        "password": "12345678"
+    },
+    {
+        "id": "5cb3fda0-20b6-47e5-8bea-3133da77f9e0",
+        "username": "julian",
+        "password": "test_test"
+    },
+    {
+        "id": "ec01ddd2-6946-486d-a22d-60f7fbbcb302",
+        "username": "lukas",
+        "password": "strong_password"
+    }
+]
