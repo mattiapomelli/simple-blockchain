@@ -25,14 +25,15 @@ class UserDB:
         # convert the users from json to User objects
         self.db = [User(u['id'], u['username'], u['password']) for u in data]
 
-    def create_user(self, username, password):
+    def create(self, username, password):
         """
         Creates a new user and adds it to the database (writes the new list of users to the file)
         Returns the created user
         """
 
-        existing_user = next((u for u in self.db if u.username == username), None)
+        existing_user = self.find_by_username(username)
 
+        # TODO: throw an error or do something (add to documentation)
         if existing_user is not None:
             print("A user with username " + username + " already exists")
             return
@@ -52,8 +53,11 @@ class UserDB:
 
         return new_user
 
-    def sign_in(self, username, password):
-        return
+    def find_by_username(self, username):
+        """
+        Finds an user by username. Returns the user if exists, None otherwise
+        """
+        return next((u for u in self.db if u.username == username), None)
 
     def reset(self):
         file = open(self.db_path, 'w')
