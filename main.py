@@ -58,6 +58,17 @@ def main():
             print("Pending transactions:")
             print(str([str(t) for t in blockchain.pending_transactions]))
 
+        elif command == 'm':
+            if user_controller.current_user is None:
+                print("You must be logged to mine a block")
+                continue
+
+            print("Mining a new block with pending transactions...")
+            blockchain.mine(user_controller.current_user.username)
+
+        elif command == 'b':
+            print(blockchain)
+
         # quit application
         elif command == 'q':
             print("Quitting application...")
