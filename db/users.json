@@ -1,17 +1,7 @@
 [
     {
-        "id": "825af06e-ebf4-426d-bb40-9acc8f763709",
+        "id": "6ec8fb55-31ec-4e98-bc1b-a18f1e33dc5e",
         "username": "mattia",
-        "password": "12345678"
-    },
-    {
-        "id": "5cb3fda0-20b6-47e5-8bea-3133da77f9e0",
-        "username": "julian",
-        "password": "test_test"
-    },
-    {
-        "id": "ec01ddd2-6946-486d-a22d-60f7fbbcb302",
-        "username": "lukas",
-        "password": "strong_password"
+        "password": "b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2"
     }
 ]
