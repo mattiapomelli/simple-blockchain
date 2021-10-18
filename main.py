@@ -50,7 +50,7 @@ def main():
 
             amount = input('Enter amount: ')
 
-            transaction = Transaction(user_controller.current_user.username, receiver_username, amount)
+            transaction = Transaction(user_controller.current_user.username, receiver_username, int(amount))
             blockchain.add_transaction(transaction)
             print("Added transaction to pending transactions")
         
