@@ -1,6 +1,3 @@
-import json
-from transaction import Transaction
-
 class User:
     """
     This class represents an user of the system.
@@ -17,14 +14,6 @@ class User:
         self.id = id
         self.username = username
         self.password = password
-
-    def perform_transaction(self, receiver_username, amount):
-        """
-        Performs a new transaction:
-        - receiver_username: username of the user to send the money to
-        - amount: amount of money to be sent
-        """
-        return Transaction(self.username, receiver_username, amount)
 
     def __str__(self):
         return "Id: " + self.id + ", Username: " + self.username + "\n"
