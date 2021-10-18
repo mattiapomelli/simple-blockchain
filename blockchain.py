@@ -1,4 +1,5 @@
 from block import Block
+from transaction import Transaction
 
 class Blockchain:
     """
@@ -8,9 +9,12 @@ class Blockchain:
 
     difficulty: number of consecutive 0s that every hash must begin with, determines
                 how complex is to mine a new block 
+
+    reward: amount of cryptocurrency that a user gets paid for mining a new block
     """
 
     difficulty = 2
+    reward = 10
 
     def __init__(self):
         """
@@ -56,9 +60,14 @@ class Blockchain:
         """
         self.pending_transactions.append(transaction)
 
-    def mine(self):
+    def mine(self, reward_username):
         """
+        reward_username: username of the user that is mining the block and that should be rewarded
+
         Mines a new block:
+        - creates a new transaction for rewarding the user mining the block. This particular transaction
+          has no sender so it's simply indicated by an empty string
+        - adds the mining reward transaction to the pending transactions
         - stores the pending transactions in the block
         - computes its proof of work
         - adds it to the chain
@@ -67,7 +76,9 @@ class Blockchain:
         - index: equal to the index of the last block in the chain + 1
         - previous_hash: hash of the last block in the chain
         """
-        # TODO: add mining reward: create transaction to miner and add it to pending transactions
+        reward_transaction = Transaction('', reward_username, self.reward)
+        self.add_transaction(reward_transaction)
+
         # TODO: check maximum number of transactions in a block 
         new_block = Block(
             index=self.last_block.index + 1,
