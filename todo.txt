@@ -1,67 +1,60 @@
-TODO:
-- introduce randomness:
-  - to determine the value of the currency
-  - suggest a random password to the user when signing up
-- use Symmetric Encryption (AES):
-  - transactions will have an additional field: reason, that will be encrypted.
-  - only sender and receiver of this transaction can see it
-- use hash functions:
-  - Block hashes
-  - store passwords (?)
+CONCEPTS TO USE:
+[ ] Randomness:
+      - to determine the value of the currency
+      - suggest a random password to the user when signing up
+[ ] Symmetric Encryption (AES):
+      - transactions will have an additional field: reason, that will be encrypted.
+        => only sender and receiver of this transaction can see it
+[X] Hash Functions:
+      - Block hashes
+      - Store passwords
 
 FEATURES:
-  Done:
-  - create blocks
-  - create blockchain
-  - create proof of work
-  - create transactions
+  - DONE:
+    - create blocks
+    - create blockchain
+    - create proof of work
+    - create transactions
+    - create users:
+        - signup
+        - login 
+      
+  - TO IMPLEMENT:
+    PRIORITY:
+    - Introduce mine rewards
+    - Calculate user balance
+    - Deny overspending transactions
+    - Cli functions:
+        - mine blocks
+        - visualize the blockchain
+        - see balance
+    - Extra verifications
+        - verify chain function: check that previous hashes are consistent
+        - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
+    - Printing with colors
 
-  To Implement:
-  - sign transactions
-    - digital signatures with private-public key
-    - include a transaction id
-  - deny overspending transactions
-  - introduce users:
-    - calculate user balance
-    - mine rewards
-    - user db: file or sqlite
-  - introduce wallets
-    - wallet addresses
-  - extra verifications:
-    - verify chain function: check that previous hashes are consistent
-    - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
-  - decentralization/distribution
-    - every user has its own copy of the blockchain (can be stored on files with the name/id of the user)
-      - when an user performs a transaction should add it to its own blockchain and then broadcast it to 
-        everyone else
-    - multi-user support: multiple terminals running the application can be opened at the same time
-  - cli:
-    - register/login
-    - make transactions
-    - see your balance
-    - visualize the blockchain
-    - start mining
-  - simulate errors when trying to corrupt data
+    FUTURE:
+    - Sign Transactions
+        - digital signatures with private-public key
+        - include a transaction id
+    - Introduce Wallets:
+        - wallet address for transactions or rewards
+    - Decentralization/Distribution
+        - every user has its own copy of the blockchain (can be stored on files with the name/id of the user)
+          when an user performs a transaction should add it to its own blockchain and then broadcast it to 
+          everyone else
+        - multi-user support: multiple terminals running the application can be opened at the same time
+    - Simulate errors when trying to corrupt data
+
 
 BUGS:
 - If the file is empty there is an error when reading it (has to be: [])
 
 CODING FEATURES/OPTIMIZATIONS
 - Is User Id needed?
-- move add_user from User init to db function?
-- pass the user data to the userdb_service and get a new user returned, instead
-  of creating first a user and passing it to the userdb_service
 - Make userDB a singleton
 - cache the file as an attribute inside users_db
-- move check of already existing username outside users_db, and there provide a method find_by_username
 - userDB:
-  - create
-  - find_all
-  - find_by_username
   - drop
   - ...
   - don't keep db attribute but open file every time?
-- UserAPI
-  - signup
-  - signin
-  - ...
