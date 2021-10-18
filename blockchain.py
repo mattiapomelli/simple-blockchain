@@ -90,6 +90,24 @@ class Blockchain:
         self.add_block(new_block)
         self.pending_transactions = []
 
+    def calculate_balance(self, username):
+        """
+        Calculates the amount of cryptocurrency owned by the user with the given username.
+        A cryptocurrency is essentialy an history of transactions.
+        So the only way to know an user's balance is to iterate over all the blocks and
+        check the full history of transactions that involved the user.
+        """
+        balance = 0
+
+        for block in self.chain:
+            for transaction in block.transactions:
+                if transaction.receiver == username:
+                    balance += transaction.amount
+                elif transaction.sender == username:
+                    balance -= transaction.amount
+        
+        return balance
+
     @property
     def last_block(self):
         """
