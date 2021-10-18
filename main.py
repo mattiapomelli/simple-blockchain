@@ -37,6 +37,11 @@ def main():
                 continue
 
             receiver_username = input('Enter receiver username: ')
+
+            if receiver_username == user_controller.current_user.username:
+                print("You can't send money to yourself")
+                continue
+
             receiver = users_db.find_by_username(receiver_username)
 
             if receiver is None:
