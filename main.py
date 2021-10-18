@@ -54,10 +54,12 @@ def main():
             blockchain.add_transaction(transaction)
             print("Added transaction to pending transactions")
         
+        # print pending transactions
         elif command == 'pt':
             print("Pending transactions:")
             print(str([str(t) for t in blockchain.pending_transactions]))
 
+        # mine a new block
         elif command == 'm':
             if user_controller.current_user is None:
                 print("You must be logged to mine a block")
@@ -66,8 +68,17 @@ def main():
             print("Mining a new block with pending transactions...")
             blockchain.mine(user_controller.current_user.username)
 
+        # print the blockchain
         elif command == 'b':
             print(blockchain)
+
+        # check logged user's balance
+        elif command == 'ba':
+            if user_controller.current_user is None:
+                print("You must be logged to check you balance")
+                continue
+            
+            print("Your balance is: " + str(blockchain.calculate_balance(user_controller.current_user.username)))
 
         # quit application
         elif command == 'q':
