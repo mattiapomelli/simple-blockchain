@@ -17,6 +17,7 @@ def main():
             username = input('Enter username: ')
             password = input('Enter password: ')
             user_controller.signup(username, password)
+            blockchain.reward(username)
         
         # login
         elif command == 'l':
@@ -72,7 +73,7 @@ def main():
 
             print("Mining a new block with pending transactions...")
             blockchain.mine(user_controller.current_user.username)
-            print("You have been rewarded with " + str(blockchain.reward) + "$")
+            print("You have been rewarded with " + str(blockchain.reward_amount) + "$")
 
         # print the blockchain
         elif command == 'b':

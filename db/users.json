@@ -8,5 +8,20 @@
         "id": "086f7c4d-cb06-4f65-87cb-d07a9d1883cc",
         "username": "stefano",
         "password": "b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2"
+    },
+    {
+        "id": "6fe5852c-7388-4bcc-907f-9a5adafb3b29",
+        "username": "julian",
+        "password": "b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2"
+    },
+    {
+        "id": "0dc973b7-c1c2-4fd6-8e97-b6d13f9e910b",
+        "username": "bob",
+        "password": "b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2"
+    },
+    {
+        "id": "6017b7b8-b0b3-4b6f-a587-d618cc2ffd0d",
+        "username": "billy",
+        "password": "b133a0c0e9bee3be20163d2ad31d6248db292aa6dcb1ee087a2aa50e0fc75ae2"
     }
 ]
