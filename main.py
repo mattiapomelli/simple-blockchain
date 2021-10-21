@@ -53,9 +53,11 @@ def main():
                 print("No user with username " + receiver_username + " exists")
                 continue
 
+            # TODO: check that amount is a number
             amount = input('Enter amount: ')
+            reason = input('Enter reason: ')
 
-            transaction = Transaction(user_controller.current_user.username, receiver_username, int(amount))
+            transaction = Transaction(user_controller.current_user.username, receiver_username, int(amount), reason)
 
             try:
                 blockchain.add_transaction(transaction)
