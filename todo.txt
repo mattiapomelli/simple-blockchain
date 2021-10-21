@@ -18,20 +18,18 @@ FEATURES:
     - create users:
         - signup
         - login 
-      
-  - TO IMPLEMENT:
-    PRIORITY:
-    - Introduce mine rewards
+    - Introduce mining rewards  
     - Calculate user balance
     - Deny overspending transactions
-    - Cli functions:
-        - mine blocks
-        - visualize the blockchain
-        - see balance
+
+  - TO IMPLEMENT:
+    PRIORITY:
     - Extra verifications
         - verify chain function: check that previous hashes are consistent
         - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
     - Printing with colors
+    - Document/Comment
+    - Check for todos around the project
 
     FUTURE:
     - Sign Transactions
@@ -45,6 +43,11 @@ FEATURES:
           everyone else
         - multi-user support: multiple terminals running the application can be opened at the same time
     - Simulate errors when trying to corrupt data
+    - Keep user logged in
+    - Better error handling in cli input:
+        - amount: must be a number
+        - username, password: must be longer tha tot characters
+    - Persist blockchain (saving it in a file)
 
 
 BUGS:
@@ -58,3 +61,5 @@ CODING FEATURES/OPTIMIZATIONS
   - drop
   - ...
   - don't keep db attribute but open file every time?
+- Store current_user in main.py (just the username) and not in user controller
+- is_logged() utility function (in user controller)
