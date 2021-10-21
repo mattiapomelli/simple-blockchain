@@ -13,7 +13,7 @@ class AESCipher:
         key: encryption key
         """
         self.block_size = AES.block_size
-        self.key = key
+        self.key = self.pad(key)
 
     def encrypt(self, message):
         """

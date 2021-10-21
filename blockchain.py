@@ -86,7 +86,7 @@ class Blockchain:
         - a user mines a new block and it gets rewarded for this
         - when a new user signs up gets an initial amount of money
         """
-        reward_transaction = Transaction('', username, self.reward_amount, 'reward')
+        reward_transaction = Transaction('', username, self.reward_amount, 'reward', "key")
         self.add_transaction(reward_transaction)
 
     def mine(self, reward_username):

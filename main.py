@@ -7,11 +7,11 @@ from exceptions import OverspendingError
 def main():
     current_user = None
     blockchain = Blockchain()
-
+    
     while True:
         # TODO: print list of available commands, i can do it ^^
         print(" list of commands:\n s - signup\n l - login\n u - check logged in account\n "
-              "commands available after login in:\n t - perform transaction\n pt - print pending transaction\n m - mine the block\n b - print blockcain\n ba - print user ballance\n q - quit")
+            "commands available after login in:\n t - perform transaction\n pt - print pending transaction\n m - mine the block\n b - print blockcain\n ba - print user ballance\n q - quit")
 
         command = input('Select a command to execute: ')
 
@@ -56,8 +56,15 @@ def main():
             # TODO: check that amount is a number
             amount = input('Enter amount: ')
             reason = input('Enter reason: ')
+            key = input('Enter a key for encrypting the transiction reason')
 
-            transaction = Transaction(user_controller.current_user.username, receiver_username, int(amount), reason)
+            transaction = Transaction(
+                user_controller.current_user.username,
+                receiver_username,
+                int(amount),
+                reason,
+                key
+            )
 
             try:
                 blockchain.add_transaction(transaction)
