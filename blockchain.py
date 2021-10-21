@@ -1,5 +1,6 @@
 from block import Block
 from transaction import Transaction
+from exceptions import OverspendingError
 
 class Blockchain:
     """
@@ -56,8 +57,23 @@ class Blockchain:
 
     def add_transaction(self, transaction):
         """
-        Adds a new transactions to the pending transactions
+        Adds a new transactions to the pending transactions.
+        Before adding the new transaction, checks if it's not an overspending transaction:
+        the sender has enough money to perform the transaction, so his balance is at least as much
+        as the transaction amount.
+        If the transaction is overspending, raises OverspendingError.
+        If the transaction has no sender, it means that it is a mining reward transaction, and so
+        no balance should be checked.
         """
+        sender_username = transaction.sender
+
+        if sender_username:
+            # it's not a mining reward transaction
+            sender_balance = self.calculate_balance(sender_username)
+
+            if sender_balance < transaction.amount:
+                raise OverspendingError
+
         self.pending_transactions.append(transaction)
 
     def mine(self, reward_username):

@@ -2,6 +2,7 @@ from user_controller import user_controller
 from users_db import users_db
 from transaction import Transaction
 from blockchain import Blockchain
+from exceptions import OverspendingError
 
 def main():
     current_user = None
@@ -51,8 +52,12 @@ def main():
             amount = input('Enter amount: ')
 
             transaction = Transaction(user_controller.current_user.username, receiver_username, int(amount))
-            blockchain.add_transaction(transaction)
-            print("Added transaction to pending transactions")
+
+            try:
+                blockchain.add_transaction(transaction)
+                print("Added transaction to pending transactions")
+            except OverspendingError:
+                print("You don't have enough money to perform this transaction")
         
         # print pending transactions
         elif command == 'pt':
@@ -67,6 +72,7 @@ def main():
 
             print("Mining a new block with pending transactions...")
             blockchain.mine(user_controller.current_user.username)
+            print("You have been rewarded with " + str(blockchain.reward) + "$")
 
         # print the blockchain
         elif command == 'b':

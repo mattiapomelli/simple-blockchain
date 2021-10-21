@@ -1,0 +1,2 @@
+class OverspendingError(Exception):
+    pass
