@@ -9,7 +9,10 @@ def main():
     blockchain = Blockchain()
 
     while True:
-        # TODO: print list of available commands
+        # TODO: print list of available commands, i can do it ^^
+        print(" list of commands:\n s - signup\n l - login\n u - check logged in account\n "
+              "commands available after login in:\n t - perform transaction\n pt - print pending transaction\n m - mine the block\n b - print blockcain\n ba - print user ballance\n q - quit")
+
         command = input('Select a command to execute: ')
 
         # signup
