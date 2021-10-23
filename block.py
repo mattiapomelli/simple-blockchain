@@ -40,11 +40,20 @@ class Block:
         return hash.hexdigest()
 
     def __str__(self):
+        transactions_str = "["
+        for t in self.transactions:
+            transactions_str += f"\n   {str(t)}"
+        
+        if len(self.transactions) > 0:
+            transactions_str += "\n"
+
+        transactions_str += "]"
+
         return (
-            "\nIndex: " + str(self.index) +
-            "\nTimestamp: " + str(self.timestamp) +
-            "\nTransactions: " + str([str(t) for t in self.transactions]) +
-            "\nPrevious Hash: " + str(self.previous_hash) +
-            "\nHash: " + str(self.compute_hash()) +
+            f"\nIndex: {str(self.index)}"
+            f"\nTimestamp: {str(self.timestamp)}"
+            f"\nTransactions: {transactions_str}"
+            f"\nPrevious Hash: {str(self.previous_hash)}"
+            f"\nHash: {str(self.compute_hash())}"
             "\n----------"
         )
