@@ -5,6 +5,7 @@ from blockchain import Blockchain
 from exceptions import OverspendingError
 from aes import AESCipher
 from printer import Printer
+from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
 def colored(r, g, b, text):
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
@@ -37,7 +38,7 @@ def main():
         print(f"{colored(245, 185, 66, key)} - {colored(190, 210, 210, value)}")
     
     while True:
-        text = 'Select a command to execute: '
+        text = '>>> Select a command to execute: '
         colored_text = colored(245, 245, 66, text)
 
         command = input(colored_text)
@@ -46,14 +47,25 @@ def main():
         if command == 's':
             username = input('Enter username: ')
             password = input('Enter password: ')
-            auth.signup(username, password)
-            blockchain.reward(username)
+            try:
+                auth.signup(username, password)
+                blockchain.reward(username)
+                Printer.success(f"Created new user: {username}")
+                Printer.success(f"Signed in as {username}")
+            except ConflictError:
+                Printer.error("Username is taken")
         
         # login
         elif command == 'l':
             username = input('Enter username: ')
             password = input('Enter password: ')
-            auth.signin(username, password)
+            try:
+                auth.signin(username, password)
+                Printer.success(f"Signed is as {username}")
+            except NotFoundError:
+                Printer.error(f"No user exists with username {username}")
+            except InvalidCredentialsError:
+                Printer.error("Password is not correct")
 
         # check logged user
         elif command == 'u':

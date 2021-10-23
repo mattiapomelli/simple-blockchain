@@ -1,5 +1,6 @@
 from users_db import users_db
 from hashlib import sha256
+from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
 class Auth:
     def __init__(self):
@@ -9,26 +10,21 @@ class Auth:
         existing_user = users_db.find_by_username(username)
 
         if existing_user is not None:
-            print("Username is taken")
-            return
+            raise ConflictError
 
         hashed_password = sha256(password.encode()).hexdigest()
 
         self.current_user = users_db.create(username, hashed_password)
-        print("Created new user: " + username)
-        print("Signed in as " + username)
 
     def signin(self, username, password):
         user = users_db.find_by_username(username)
         
         if user is None:
-            print("No user exists with the provided username")
-            return
+            raise NotFoundError
 
         hashed_password = sha256(password.encode()).hexdigest()
         
-        if user.password == hashed_password:
-            self.current_user = user
-            print("Signed in as " + username)
-        else:
-            print("Password is not correct")
+        if user.password != hashed_password:
+            raise InvalidCredentialsError
+        
+        self.current_user = user
