@@ -24,6 +24,7 @@ def main():
         "m": "mine a block",
         "b": "print blockchain",
         "ba": "print user balance",
+        "dt": "decrypt the reason of a transaction"
     }
     
     print("List of commands: ")
@@ -94,6 +95,10 @@ def main():
 
             # TODO: check that amount is a number
             amount = input('Enter amount: ')
+            if not amount.isdigit():
+                Printer.error("Amount must be a positive integer")
+                continue
+
             reason = input('Enter reason: ')
             key = input('Enter a key for encrypting the transiction reason: ')
 
@@ -118,6 +123,10 @@ def main():
 
         # decrypt reason of a transaction
         elif command == 'dt':
+            if not auth.is_logged():
+                Printer.error("You must be logged in to decrypt a transaction")
+                continue
+
             transaction_id = input("Enter transaction id: ")
             transaction = blockchain.find_transaction_by_id(int(transaction_id))
 
@@ -125,6 +134,7 @@ def main():
                 Printer.error(f"No transaction found with id {transaction_id}")
                 continue
             
+            Printer.info("Transaction: ", end = '')
             print(transaction)
             key = input("Enter key to decrypt transaction reason: ")
             aes = AESCipher(key)
