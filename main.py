@@ -122,8 +122,14 @@ def main():
         
         # print pending transactions
         elif command == 'pt':
-            Printer.info("Pending transactions:")
-            print(str([str(t) for t in blockchain.pending_transactions]))
+            Printer.info("Pending transactions: [", end="")
+            if len(blockchain.pending_transactions) > 0:
+                print()
+
+            for t in blockchain.pending_transactions:
+                print(f"   {str(t)}")
+
+            Printer.info("]")
 
         # decrypt reason of a transaction
         elif command == 'dt':

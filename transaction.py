@@ -1,5 +1,6 @@
 from time import time
 from aes import AESCipher
+from printer import Printer
 
 class Transaction:
     next_id = 0
@@ -36,4 +37,6 @@ class Transaction:
             self.is_encrypted = False
 
     def __str__(self):
-        return f"Id: {self.id} - {self.sender} paid {self.receiver} {self.amount}$ for reason: {self.reason}"
+        colored_sender = Printer.colored(255, 209, 92, self.sender)
+        colored_receiver = Printer.colored(255, 209, 92, self.receiver)
+        return f"Id: {self.id} - {colored_sender} paid {colored_receiver} {self.amount}$ for reason: {self.reason}"
