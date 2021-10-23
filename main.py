@@ -7,9 +7,6 @@ from aes import AESCipher
 from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
-def colored(r, g, b, text):
-    return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
-
 def main():
     blockchain = Blockchain()
     auth = Auth()
@@ -31,16 +28,19 @@ def main():
     
     print("List of commands: ")
     for key, value in commands.items():
-        print(f"{colored(245, 185, 66, key)} - {colored(190, 210, 210, value)}")
+        colored_key = Printer.colored(245, 185, 66, key)
+        colored_value = Printer.colored(200, 200, 200, value)
+        print(f"{colored_key} - {colored_value}")
     
     print("Commands available after login: ")
     for key, value in commands_after_login.items():
-        print(f"{colored(245, 185, 66, key)} - {colored(190, 210, 210, value)}")
+        colored_key = Printer.colored(245, 185, 66, key)
+        colored_value = Printer.colored(200, 200, 200, value)
+        print(f"{colored_key} - {colored_value}")
     
     while True:
         text = '>>> Select a command to execute: '
-        colored_text = colored(245, 245, 66, text)
-
+        colored_text = Printer.colored(135, 185, 199, text)
         command = input(colored_text)
 
         # signup
@@ -70,9 +70,9 @@ def main():
         # check logged user
         elif command == 'u':
             if auth.is_logged():
-                print("Logged user: " + auth.user.username)
+                Printer.info("Logged user: " + auth.user.username)
             else:
-                print("No user is logged in")
+                Printer.info("No user is logged in")
 
         # perform a new transaction
         elif command == 't':
@@ -113,7 +113,7 @@ def main():
         
         # print pending transactions
         elif command == 'pt':
-            print("Pending transactions:")
+            Printer.info("Pending transactions:")
             print(str([str(t) for t in blockchain.pending_transactions]))
 
         # decrypt reason of a transaction
@@ -131,7 +131,7 @@ def main():
 
             try:
                 reason = aes.decrypt(transaction.reason)
-                print(f"Reason of the transaction: {reason}")
+                Printer.info(f"Reason of the transaction: {reason}")
             except:
                 Printer.error("Invalid key")
 
@@ -141,13 +141,13 @@ def main():
                 Printer.error("You must be logged to mine a block")
                 continue
 
-            print("Mining a new block with pending transactions...")
+            Printer.info("Mining a new block with pending transactions...")
             blockchain.mine(auth.user.username)
             Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
 
         # print the blockchain
         elif command == 'b':
-            print("Blockchain:")
+            Printer.info("Blockchain:")
             print(blockchain)
 
         # check logged user's balance
@@ -156,16 +156,16 @@ def main():
                 Printer.error("You must be logged to check you balance")
                 continue
             
-            print("Your balance is: " + str(blockchain.calculate_balance(auth.user.username)))
+            Printer.info("Your balance is: " + str(blockchain.calculate_balance(auth.user.username)))
 
         # quit application
         elif command == 'q':
-            print("Quitting application...")
+            Printer.info("Quitting application...")
             return
 
         # invalid command
         else:
-            print('Invalid command')
+            Printer.error('Invalid command')
 
 if __name__ == "__main__":
     main()

@@ -5,7 +5,7 @@ class Printer:
 
     @staticmethod
     def error(text):
-        colored_text = Printer.colored(227, 67, 27, text)
+        colored_text = Printer.colored(247, 64, 54, text)
         print(colored_text)
 
     @staticmethod
@@ -15,5 +15,5 @@ class Printer:
 
     @staticmethod
     def info(text):
-        colored_text = Printer.colored(245, 245, 66, text)
+        colored_text = Printer.colored(252, 250, 174, text)
         print(colored_text)
