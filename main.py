@@ -69,14 +69,14 @@ def main():
 
         # check logged user
         elif command == 'u':
-            if auth.user is None:
-                print("No user is logged in")
-            else:
+            if auth.is_logged():
                 print("Logged user: " + auth.user.username)
+            else:
+                print("No user is logged in")
 
         # perform a new transaction
         elif command == 't':
-            if auth.user is None:
+            if not auth.is_logged():
                 Printer.error("You must be logged in to perform a transaction")
                 continue
 
@@ -137,7 +137,7 @@ def main():
 
         # mine a new block
         elif command == 'm':
-            if auth.user is None:
+            if not auth.is_logged():
                 Printer.error("You must be logged to mine a block")
                 continue
 
@@ -152,7 +152,7 @@ def main():
 
         # check logged user's balance
         elif command == 'ba':
-            if auth.user is None:
+            if not auth.is_logged():
                 Printer.error("You must be logged to check you balance")
                 continue
             

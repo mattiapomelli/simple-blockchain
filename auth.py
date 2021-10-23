@@ -28,3 +28,6 @@ class Auth:
             raise InvalidCredentialsError
         
         self.user = user
+    
+    def is_logged(self):
+        return self.user != None
