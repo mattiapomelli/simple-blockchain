@@ -50,7 +50,7 @@ def main():
             password = input('Enter password: ')
             try:
                 auth.signup(username, password)
-                blockchain.reward(username)
+                blockchain.reward(username, "initial reward")
                 Printer.success(f"Created new user: {username}")
                 Printer.success(f"Signed in as {username}")
             except ConflictError:

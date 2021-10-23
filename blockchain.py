@@ -76,17 +76,20 @@ class Blockchain:
 
         self.pending_transactions.append(transaction)
 
-    def reward(self, username):
+    def reward(self, username, reward_reason):
         """
         Creates a new reward transaction and adds it to the pending transactions.
 
         - username: username of the user which will receive a reward transaction
+        - reward_reason: reason of the reward transaction
 
         A reward transaction can happen in two situations:
         - a user mines a new block and it gets rewarded for this
         - when a new user signs up gets an initial amount of money
+
+        Reward transactions have no sender. Thus, the sender is set to None.
         """
-        reward_transaction = Transaction('', username, self.reward_amount, 'reward')
+        reward_transaction = Transaction(None, username, self.reward_amount, reward_reason)
         self.add_transaction(reward_transaction)
 
     def mine(self, reward_username):
@@ -94,9 +97,7 @@ class Blockchain:
         reward_username: username of the user that is mining the block and that should be rewarded
 
         Mines a new block:
-        - creates a new transaction for rewarding the user mining the block. This particular transaction
-          has no sender so it's simply indicated by an empty string
-        - rewards the user mining the new block
+        - rewards the user for having mined a new block
         - stores the pending transactions in the block
         - computes its proof of work
         - adds it to the chain
@@ -105,7 +106,7 @@ class Blockchain:
         - index: equal to the index of the last block in the chain + 1
         - previous_hash: hash of the last block in the chain
         """
-        self.reward(reward_username)
+        self.reward(reward_username, "mining reward")
 
         # TODO: check maximum number of transactions in a block 
         new_block = Block(
