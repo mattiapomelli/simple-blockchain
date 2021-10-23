@@ -2,6 +2,8 @@ from time import time
 from aes import AESCipher
 
 class Transaction:
+    next_id = 0
+
     """
     This class represents a transaction of the cryptocurrency.
     Transactions have to be stored inside a block in the chain to be considered official.
@@ -15,6 +17,8 @@ class Transaction:
         timestamp: time at which the transaction was made
         reason: 
         """
+        self.id = Transaction.next_id
+        Transaction.next_id += 1
         self.sender = sender
         self.receiver = receiver
         self.amount = amount
@@ -24,4 +28,4 @@ class Transaction:
         self.reason = aes.encrypt(reason)
 
     def __str__(self):
-        return f"{self.sender} paid {self.receiver} {self.amount}$ for {self.reason}"
+        return f"Id: {self.id} - {self.sender} paid {self.receiver} {self.amount}$ for reason: {self.reason}"
