@@ -100,14 +100,13 @@ def main():
                 continue
 
             reason = input('Enter reason: ')
-            key = input('Enter a key for encrypting the transiction reason: ')
 
             transaction = Transaction(
                 auth.user.username,
                 receiver_username,
                 int(amount),
                 reason,
-                key
+                encryption_key=key
             )
 
             try:
