@@ -133,14 +133,15 @@ def main():
                 Printer.error(f"No transaction found with id {transaction_id}")
                 continue
             
-            Printer.info("Transaction: ", end = '')
+            Printer.info("Transaction: ", end="")
             print(transaction)
             key = input("Enter key to decrypt transaction reason: ")
             aes = AESCipher(key)
 
             try:
                 reason = aes.decrypt(transaction.reason)
-                Printer.info(f"Reason of the transaction: {reason}")
+                Printer.info("Reason of the transaction: ", end="")
+                print(reason)
             except:
                 Printer.error("Invalid key")
 
@@ -165,7 +166,8 @@ def main():
                 Printer.error("You must be logged to check you balance")
                 continue
             
-            Printer.info("Your balance is: " + str(blockchain.calculate_balance(auth.user.username)))
+            Printer.info("Your balance is: ", end="")
+            print(f"{str(blockchain.calculate_balance(auth.user.username))}$")
 
         # quit application
         elif command == 'q':
