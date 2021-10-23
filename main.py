@@ -69,20 +69,20 @@ def main():
 
         # check logged user
         elif command == 'u':
-            if auth.current_user is None:
+            if auth.user is None:
                 print("No user is logged in")
             else:
-                print("Logged user: " + auth.current_user.username)
+                print("Logged user: " + auth.user.username)
 
         # perform a new transaction
         elif command == 't':
-            if auth.current_user is None:
+            if auth.user is None:
                 Printer.error("You must be logged in to perform a transaction")
                 continue
 
             receiver_username = input('Enter receiver username: ')
 
-            if receiver_username == auth.current_user.username:
+            if receiver_username == auth.user.username:
                 Printer.error("You can't send money to yourself")
                 continue
 
@@ -98,7 +98,7 @@ def main():
             key = input('Enter a key for encrypting the transiction reason: ')
 
             transaction = Transaction(
-                auth.current_user.username,
+                auth.user.username,
                 receiver_username,
                 int(amount),
                 reason,
@@ -137,12 +137,12 @@ def main():
 
         # mine a new block
         elif command == 'm':
-            if auth.current_user is None:
+            if auth.user is None:
                 Printer.error("You must be logged to mine a block")
                 continue
 
             print("Mining a new block with pending transactions...")
-            blockchain.mine(auth.current_user.username)
+            blockchain.mine(auth.user.username)
             Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
 
         # print the blockchain
@@ -152,11 +152,11 @@ def main():
 
         # check logged user's balance
         elif command == 'ba':
-            if auth.current_user is None:
+            if auth.user is None:
                 Printer.error("You must be logged to check you balance")
                 continue
             
-            print("Your balance is: " + str(blockchain.calculate_balance(auth.current_user.username)))
+            print("Your balance is: " + str(blockchain.calculate_balance(auth.user.username)))
 
         # quit application
         elif command == 'q':

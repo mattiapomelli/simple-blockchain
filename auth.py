@@ -4,7 +4,7 @@ from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
 class Auth:
     def __init__(self):
-        self.current_user = None
+        self.user = None
 
     def signup(self, username, password):
         existing_user = users_db.find_by_username(username)
@@ -14,7 +14,7 @@ class Auth:
 
         hashed_password = sha256(password.encode()).hexdigest()
 
-        self.current_user = users_db.create(username, hashed_password)
+        self.user = users_db.create(username, hashed_password)
 
     def signin(self, username, password):
         user = users_db.find_by_username(username)
@@ -27,4 +27,4 @@ class Auth:
         if user.password != hashed_password:
             raise InvalidCredentialsError
         
-        self.current_user = user
+        self.user = user
