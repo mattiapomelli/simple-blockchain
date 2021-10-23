@@ -100,6 +100,11 @@ def main():
                 continue
 
             reason = input('Enter reason: ')
+            to_encrypt = input("Do you want to encrypt the reason of the transaction? (y/n) ")
+            key = None
+
+            if to_encrypt == 'y':
+                key = input('Enter a key for encrypting the transiction reason: ')
 
             transaction = Transaction(
                 auth.user.username,
