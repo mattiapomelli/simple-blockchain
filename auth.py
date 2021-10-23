@@ -1,7 +1,7 @@
 from users_db import users_db
 from hashlib import sha256
 
-class UserController:
+class Auth:
     def __init__(self):
         self.current_user = None
 
@@ -32,5 +32,3 @@ class UserController:
             print("Signed in as " + username)
         else:
             print("Password is not correct")
-
-user_controller = UserController()
