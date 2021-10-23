@@ -3,6 +3,7 @@ from users_db import users_db
 from transaction import Transaction
 from blockchain import Blockchain
 from exceptions import OverspendingError
+from aes import AESCipher
 
 def main():
     blockchain = Blockchain()
@@ -75,6 +76,24 @@ def main():
         elif command == 'pt':
             print("Pending transactions:")
             print(str([str(t) for t in blockchain.pending_transactions]))
+
+        elif command == 'dt':
+            transaction_id = input("Enter transaction id: ")
+            transaction = blockchain.find_transaction_by_id(int(transaction_id))
+
+            if transaction is None:
+                print(f"No transaction found with id {transaction_id}")
+                continue
+            
+            print(transaction)
+            key = input("Enter key to decrypt transaction reason: ")
+            aes = AESCipher(key)
+
+            try:
+                reason = aes.decrypt(transaction.reason)
+                print(f"Reason of the transaction: {reason}")
+            except:
+                print("Invalid key")
 
         # mine a new block
         elif command == 'm':

@@ -135,6 +135,18 @@ class Blockchain:
                     balance -= transaction.amount
         
         return balance
+    
+    def find_transaction_by_id(self, transaction_id):
+        """
+        Returns the transaction with the given id, if it exists in the blockchain.
+        Otherwise returns None
+        """
+        for block in self.chain:
+            for transaction in block.transactions:
+                if transaction.id == transaction_id:
+                    return transaction
+        
+        return None
 
     @property
     def last_block(self):
