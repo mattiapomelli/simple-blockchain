@@ -93,9 +93,8 @@ def main():
                 Printer.error("No user with username " + receiver_username + " exists")
                 continue
 
-            # TODO: check that amount is a number
             amount = input('Enter amount: ')
-            if not amount.isdigit():
+            if not amount.isdigit() or int(amount) <= 0:
                 Printer.error("Amount must be a positive integer")
                 continue
 
