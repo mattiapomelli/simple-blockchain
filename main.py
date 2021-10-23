@@ -140,6 +140,11 @@ def main():
             
             Printer.info("Transaction: ", end="")
             print(transaction)
+            
+            if not transaction.is_encrypted:
+                Printer.error("The transaction is not encrypted")
+                continue
+            
             key = input("Enter key to decrypt transaction reason: ")
             aes = AESCipher(key)
 

@@ -17,7 +17,8 @@ class Transaction:
         timestamp: time at which the transaction was made
         reason: reason of the transaction.
         encryption_key: key that is gonna be used to encrypt the reason of the transaction. If is None
-                        then the reason will not be ecnrypted 
+                        then the reason will not be ecnrypted
+        is_encrypted: wheter the reason of the transaction is encrypted or not
         """
         self.id = Transaction.next_id
         Transaction.next_id += 1
@@ -29,8 +30,10 @@ class Transaction:
         if encryption_key is not None:
             aes = AESCipher(encryption_key)
             self.reason = aes.encrypt(reason)
+            self.is_encrypted = True
         else:
             self.reason = reason
+            self.is_encrypted = False
 
     def __str__(self):
         return f"Id: {self.id} - {self.sender} paid {self.receiver} {self.amount}$ for reason: {self.reason}"
