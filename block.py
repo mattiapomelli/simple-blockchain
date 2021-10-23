@@ -55,5 +55,5 @@ class Block:
             f"\nTransactions: {transactions_str}"
             f"\nPrevious Hash: {str(self.previous_hash)}"
             f"\nHash: {str(self.compute_hash())}"
-            "\n----------"
+            "\n--------------------"
         )

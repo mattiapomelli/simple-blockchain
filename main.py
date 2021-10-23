@@ -4,16 +4,42 @@ from transaction import Transaction
 from blockchain import Blockchain
 from exceptions import OverspendingError
 from aes import AESCipher
+from printer import Printer
+
+def colored(r, g, b, text):
+    return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 def main():
     blockchain = Blockchain()
+
+    commands = {
+        "s": "signup",
+        "l": "login",
+        "u": "check logged user",
+        "q": "quit application"
+    }
+
+    commands_after_login = {
+        "t": "perform transaction",
+        "pt": "print pending transactions",
+        "m": "mine a block",
+        "b": "print blockchain",
+        "ba": "print user balance",
+    }
     
-    # TODO: print list of available commands, i can do it ^^
-    print(" list of commands:\n s - signup\n l - login\n u - check logged in account\n "
-        "commands available after login in:\n t - perform transaction\n pt - print pending transaction\n m - mine the block\n b - print blockcain\n ba - print user ballance\n q - quit")
+    print("List of commands: ")
+    for key, value in commands.items():
+        print(f"{colored(245, 185, 66, key)} - {colored(190, 210, 210, value)}")
+    
+    print("Commands available after login: ")
+    for key, value in commands_after_login.items():
+        print(f"{colored(245, 185, 66, key)} - {colored(190, 210, 210, value)}")
     
     while True:
-        command = input('Select a command to execute: ')
+        text = 'Select a command to execute: '
+        colored_text = colored(245, 245, 66, text)
+
+        command = input(colored_text)
 
         # signup
         if command == 's':
@@ -38,25 +64,25 @@ def main():
         # perform a new transaction
         elif command == 't':
             if user_controller.current_user is None:
-                print("You must be logged in to perform a transaction")
+                Printer.error("You must be logged in to perform a transaction")
                 continue
 
             receiver_username = input('Enter receiver username: ')
 
             if receiver_username == user_controller.current_user.username:
-                print("You can't send money to yourself")
+                Printer.error("You can't send money to yourself")
                 continue
 
             receiver = users_db.find_by_username(receiver_username)
 
             if receiver is None:
-                print("No user with username " + receiver_username + " exists")
+                Printer.error("No user with username " + receiver_username + " exists")
                 continue
 
             # TODO: check that amount is a number
             amount = input('Enter amount: ')
             reason = input('Enter reason: ')
-            key = input('Enter a key for encrypting the transiction reason')
+            key = input('Enter a key for encrypting the transiction reason: ')
 
             transaction = Transaction(
                 user_controller.current_user.username,
@@ -68,21 +94,22 @@ def main():
 
             try:
                 blockchain.add_transaction(transaction)
-                print("Added transaction to pending transactions")
+                Printer.success("Added transaction to pending transactions")
             except OverspendingError:
-                print("You don't have enough money to perform this transaction")
+                Printer.error("You don't have enough money to perform this transaction")
         
         # print pending transactions
         elif command == 'pt':
             print("Pending transactions:")
             print(str([str(t) for t in blockchain.pending_transactions]))
 
+        # decrypt reason of a transaction
         elif command == 'dt':
             transaction_id = input("Enter transaction id: ")
             transaction = blockchain.find_transaction_by_id(int(transaction_id))
 
             if transaction is None:
-                print(f"No transaction found with id {transaction_id}")
+                Printer.error(f"No transaction found with id {transaction_id}")
                 continue
             
             print(transaction)
@@ -93,26 +120,27 @@ def main():
                 reason = aes.decrypt(transaction.reason)
                 print(f"Reason of the transaction: {reason}")
             except:
-                print("Invalid key")
+                Printer.error("Invalid key")
 
         # mine a new block
         elif command == 'm':
             if user_controller.current_user is None:
-                print("You must be logged to mine a block")
+                Printer.error("You must be logged to mine a block")
                 continue
 
             print("Mining a new block with pending transactions...")
             blockchain.mine(user_controller.current_user.username)
-            print("You have been rewarded with " + str(blockchain.reward_amount) + "$")
+            Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
 
         # print the blockchain
         elif command == 'b':
+            print("Blockchain:")
             print(blockchain)
 
         # check logged user's balance
         elif command == 'ba':
             if user_controller.current_user is None:
-                print("You must be logged to check you balance")
+                Printer.error("You must be logged to check you balance")
                 continue
             
             print("Your balance is: " + str(blockchain.calculate_balance(user_controller.current_user.username)))
