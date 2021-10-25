@@ -47,6 +47,14 @@ class Blockchain:
             raise InvalidBlockchainError
     
     def is_chain_valid(self):
+        """
+        Returns True if the blockchain is valid, False otherwise.
+        A blockchain is valid if:
+        - every block's hash is valid, so it starts with a consecutive number of 0s given by
+          the blockchain's difficulty
+        - the blocks are correctly chained together: for every block except the first one, the
+          value of previous_hash is equal to the hash of the previous block in the chain
+        """
         for index, block in enumerate(self.chain):
             hash = block.compute_hash()
 
