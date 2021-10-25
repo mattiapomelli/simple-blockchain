@@ -5,13 +5,12 @@ class User:
     and receive money for mining blocks
     """
 
-    def __init__(self, id, username, password):
+    def __init__(self, username, password):
         """
         id: unique identifier of the user
         username: username of the user, is also unique
         password: password of the user
         """
-        self.id = id
         self.username = username
         self.password = password
 
