@@ -1,5 +1,5 @@
 CONCEPTS TO USE:
-[ ] Randomness:
+[X] Randomness:
       - to determine the value of the currency
       - suggest a random password to the user when signing up
 [ ] Symmetric Encryption (AES):
@@ -48,6 +48,7 @@ FEATURES:
         - amount: must be a number
         - username, password: must be longer tha tot characters
     - Persist blockchain (saving it in a file)
+    -list of commands should be visable after for example 3 bad uses of commands, after asking the user if he wants to display it again
 
 
 BUGS:
