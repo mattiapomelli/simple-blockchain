@@ -168,6 +168,7 @@ def main():
 
             Printer.info("Mining a new block with pending transactions...")
             blockchain.mine(auth.user.username)
+            Printer.success("Block has been mined and added to the chain")
             Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
 
         # print the blockchain

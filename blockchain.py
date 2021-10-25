@@ -1,6 +1,6 @@
 from block import Block
 from transaction import Transaction
-from exceptions import OverspendingError
+from exceptions import OverspendingError, InvalidBlockchainError
 
 class Blockchain:
     """
@@ -14,7 +14,7 @@ class Blockchain:
     reward_amount: amount of cryptocurrency that a user gets paid for mining a new block
     """
 
-    difficulty = 2
+    difficulty = 3
     reward_amount = 10
 
     def __init__(self):
@@ -31,14 +31,34 @@ class Blockchain:
         Creates the genesis block, the first lock of the chain.
         This block doesn't store any transactions and has an arbitrary previous hash
         """
-        return Block(0, [], "000")
+        genesis_block = Block(0, [], "000")
+        self.proof_of_work(genesis_block)
+        return genesis_block
 
     def add_block(self, block):
         """
-        Adds a new block to the end of the chain
+        Adds a new block to the end of the chain.
+        After adding the new block verifies that the chain is still valid.
+        If not, throws InvalidBlockchainError
         """
-        # TODO: check that the block is valid
         self.chain.append(block)
+        
+        if not self.is_chain_valid():
+            raise InvalidBlockchainError
+    
+    def is_chain_valid(self):
+        for index, block in enumerate(self.chain):
+            hash = block.compute_hash()
+
+            if not hash.startswith('0' * self.difficulty):
+                return False
+            
+            if index > 0:
+                previous_block = self.chain[index-1]
+                if not block.previous_hash == previous_block.compute_hash():
+                    return False
+        
+        return True
 
     def proof_of_work(self, block):
         """

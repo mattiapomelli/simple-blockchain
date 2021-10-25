@@ -9,3 +9,6 @@ class NotFoundError(Exception):
 
 class InvalidCredentialsError(Exception):
     pass
+
+class InvalidBlockchainError(Exception):
+    pass
