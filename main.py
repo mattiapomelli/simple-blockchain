@@ -11,41 +11,49 @@ def main():
     blockchain = Blockchain()
     auth = Auth()
 
-    commands = {
-        "s": "signup",
-        "l": "login",
-        "u": "check logged user",
-        "q": "quit application"
-    }
+    def print_list_of_commands():
+        commands = {
+            "s": "signup",
+            "l": "login",
+            "u": "check logged user",
+            "c": "print list of commands",
+            "q": "quit application"
+        }
 
-    commands_after_login = {
-        "t": "perform transaction",
-        "pt": "print pending transactions",
-        "m": "mine a block",
-        "b": "print blockchain",
-        "ba": "print user balance",
-        "dt": "decrypt the reason of a transaction"
-    }
+        commands_after_login = {
+            "t": "perform transaction",
+            "pt": "print pending transactions",
+            "m": "mine a block",
+            "b": "print blockchain",
+            "ba": "print user balance",
+            "dt": "decrypt the reason of a transaction"
+        }
+        
+        print("List of commands: ")
+        for key, value in commands.items():
+            colored_key = Printer.colored(255, 213, 0, key)
+            colored_value = Printer.colored(200, 200, 200, value)
+            print(f"{colored_key} - {colored_value}")
+        
+        print("Commands available after login: ")
+        for key, value in commands_after_login.items():
+            colored_key = Printer.colored(255, 213, 0, key)
+            colored_value = Printer.colored(200, 200, 200, value)
+            print(f"{colored_key} - {colored_value}")
     
-    print("List of commands: ")
-    for key, value in commands.items():
-        colored_key = Printer.colored(245, 185, 66, key)
-        colored_value = Printer.colored(200, 200, 200, value)
-        print(f"{colored_key} - {colored_value}")
-    
-    print("Commands available after login: ")
-    for key, value in commands_after_login.items():
-        colored_key = Printer.colored(245, 185, 66, key)
-        colored_value = Printer.colored(200, 200, 200, value)
-        print(f"{colored_key} - {colored_value}")
-    
+    print_list_of_commands()
+
     while True:
         text = '>>> Select a command to execute: '
         colored_text = Printer.colored(135, 185, 199, text)
         command = input(colored_text)
 
+        # print list of commands:
+        if command == 'c':
+            print_list_of_commands()
+
         # signup
-        if command == 's':
+        elif command == 's':
             username = input('Enter username: ')
             password = input('Enter password: ')
             try:
