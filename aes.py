@@ -1,5 +1,6 @@
 from Crypto import Random
 from Crypto.Cipher import AES
+from Crypto.Util import Counter
 from base64 import b64encode, b64decode
 
 class AESCipher:
@@ -17,28 +18,29 @@ class AESCipher:
 
     def encrypt(self, message):
         """
-        Receives a plain text message and returns the message encrypted with AES
-        In order to encrypt the text it:
+        Receives a plain text message and returns the message encrypted with AES,
+        using CTR operation mode. 
+        In order to encrypt the text:
         - adds padding to the message
-        - generates a random initialization vector with the same size of a block
+        - creates a counter of the size of the block
         """
         message = self.pad(message)
-        iv = Random.new().read(self.block_size)
+        counter = Counter.new(self.block_size * 8)
 
-        cipher = AES.new(self.key.encode(), AES.MODE_CBC, iv)
+        cipher = AES.new(self.key.encode(), AES.MODE_CTR, counter=counter)
         encrypted_text = cipher.encrypt(message.encode()) # encrypts the message converted to bits 
 
-        return b64encode(iv + encrypted_text).decode("utf-8")
+        return b64encode(encrypted_text).decode("utf-8")
     
     def decrypt(self, encrypted_message):
         """
-        Decryptes the received encrypted message and returns the plain message
+        Decryptes the received encrypted message and returns the plain message.
         """
         encrypted_message = b64decode(encrypted_message)
-        iv = encrypted_message[:self.block_size]
+        counter = Counter.new(self.block_size * 8)
 
-        cipher = AES.new(self.key.encode(), AES.MODE_CBC, iv)
-        message = cipher.decrypt(encrypted_message[self.block_size:]).decode("utf-8")
+        cipher = AES.new(self.key.encode(), AES.MODE_CTR, counter=counter)
+        message = cipher.decrypt(encrypted_message).decode("utf-8")
 
         return self.unpad(message)
 
