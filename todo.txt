@@ -2,7 +2,7 @@ CONCEPTS TO USE:
 [ ] Randomness:
       - to determine the value of the currency
       - suggest a random password to the user when signing up
-[ ] Symmetric Encryption (AES):
+[X] Symmetric Encryption (AES):
       - transactions will have an additional field: reason, that will be encrypted.
         => only sender and receiver of this transaction can see it
 [X] Hash Functions:
@@ -21,15 +21,16 @@ FEATURES:
     - Introduce mining rewards  
     - Calculate user balance
     - Deny overspending transactions
-
-  - TO IMPLEMENT:
-    PRIORITY:
+    - Giving initial reward to new users
     - Extra verifications
         - verify chain function: check that previous hashes are consistent
         - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
-    - Printing with colors
+
+  - TO IMPLEMENT:
+    PRIORITY:
     - Document/Comment
     - Check for todos around the project
+    - Add validation for inputs
 
     FUTURE:
     - Sign Transactions
@@ -45,21 +46,15 @@ FEATURES:
     - Simulate errors when trying to corrupt data
     - Keep user logged in
     - Better error handling in cli input:
-        - amount: must be a number
         - username, password: must be longer tha tot characters
     - Persist blockchain (saving it in a file)
 
-
-BUGS:
-- If the file is empty there is an error when reading it (has to be: [])
-
 CODING FEATURES/OPTIMIZATIONS
-- Is User Id needed?
+- don't store key in aes cipher, but pass key to decrypt method?
 - Make userDB a singleton
 - cache the file as an attribute inside users_db
 - userDB:
   - drop
   - ...
   - don't keep db attribute but open file every time?
-- Store current_user in main.py (just the username) and not in user controller
-- is_logged() utility function (in user controller)
+- user @property on block to recompute hash every time something changes?
