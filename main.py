@@ -21,6 +21,7 @@ def main():
             "l": "login",
             "u": "check logged user",
             "c": "print list of commands",
+            "e": "check currency exchange rate",
             "q": "quit application"
         }
 
@@ -45,7 +46,7 @@ def main():
             colored_value = Printer.colored(200, 200, 200, value)
             print(f"{colored_key} - {colored_value}")
     
-    print(currency)
+    Printer.info(currency)
     print_list_of_commands()
 
     while True:
@@ -60,13 +61,14 @@ def main():
         # signup
         elif command == 's':
             username = input('Enter username: ')
-            set_rand_pass = input('do you want to set a rand password (y/n)')
+            set_rand_pass = input('Do you want to set a random password? (y/n)')
         
             if set_rand_pass == 'y':
-                password = ''.join(random.choices(string.ascii_lowercase + string.digits, k = 32))
-                Printer.success(f"random generated password: {password}")
+                password = ''.join(random.choices(string.ascii_lowercase + string.digits, k = 10))
+                Printer.success(f"This is your random generated password: {password}")
             else:
                 password = input('Enter password: ')
+                
             try:
                 auth.signup(username, password)
                 blockchain.reward(username, "initial reward")
@@ -86,8 +88,9 @@ def main():
                 Printer.error(f"No user exists with username {username}")
             except InvalidCredentialsError:
                 Printer.error("Password is not correct")
-        #check current currency
-        elif command == 'c':
+
+        # check current currency exchange rate
+        elif command == 'e':
             Printer.info(currency)
 
         # check logged user
