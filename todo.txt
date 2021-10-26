@@ -1,5 +1,5 @@
 CONCEPTS TO USE:
-[ ] Randomness:
+[X] Randomness:
       - to determine the value of the currency
       - suggest a random password to the user when signing up
 [X] Symmetric Encryption (AES):
@@ -48,6 +48,7 @@ FEATURES:
     - Better error handling in cli input:
         - username, password: must be longer tha tot characters
     - Persist blockchain (saving it in a file)
+    -list of commands should be visable after for example 3 bad uses of commands, after asking the user if he wants to display it again
 
 CODING FEATURES/OPTIMIZATIONS
 - don't store key in aes cipher, but pass key to decrypt method?

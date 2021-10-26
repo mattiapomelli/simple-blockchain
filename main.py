@@ -6,10 +6,14 @@ from exceptions import OverspendingError
 from aes import AESCipher
 from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
+from currency import Currency
+import random
+import string
 
 def main():
     blockchain = Blockchain()
     auth = Auth()
+    currency = Currency()
 
     def print_list_of_commands():
         commands = {
@@ -41,6 +45,7 @@ def main():
             colored_value = Printer.colored(200, 200, 200, value)
             print(f"{colored_key} - {colored_value}")
     
+    print(currency)
     print_list_of_commands()
 
     while True:
@@ -55,7 +60,13 @@ def main():
         # signup
         elif command == 's':
             username = input('Enter username: ')
-            password = input('Enter password: ')
+            set_rand_pass = input('do you want to set a rand password (y/n)')
+        
+            if set_rand_pass == 'y':
+                password = ''.join(random.choices(string.ascii_lowercase + string.digits, k = 32))
+                Printer.success(f"random generated password: {password}")
+            else:
+                password = input('Enter password: ')
             try:
                 auth.signup(username, password)
                 blockchain.reward(username, "initial reward")
@@ -75,6 +86,9 @@ def main():
                 Printer.error(f"No user exists with username {username}")
             except InvalidCredentialsError:
                 Printer.error("Password is not correct")
+        #check current currency
+        elif command == 'c':
+            Printer.info(currency)
 
         # check logged user
         elif command == 'u':
