@@ -1,0 +1,52 @@
+[
+    {
+        "index": 0,
+        "transactions": [],
+        "timestamp": 1637233564.2408855,
+        "previous_hash": "000",
+        "nonce": 1129
+    },
+    {
+        "index": 1,
+        "transactions": [
+            {
+                "id": 0,
+                "sender": null,
+                "receiver": "mattia",
+                "amount": 10,
+                "reason": "mining reward",
+                "timestamp": 1637233568.7698617,
+                "is_encrypted": false
+            }
+        ],
+        "timestamp": 1637233568.7698617,
+        "previous_hash": "000b976e6a37c035168f67fdd749a470ac40c82ca9340919315bab31c6a84db0",
+        "nonce": 4729
+    },
+    {
+        "index": 2,
+        "transactions": [
+            {
+                "id": 1,
+                "sender": "mattia",
+                "receiver": "stefano",
+                "amount": 8,
+                "reason": "VlUb4NVtrZC07TTRQ4j4lg==",
+                "timestamp": 1637233580.446179,
+                "is_encrypted": "y"
+            },
+            {
+                "id": 2,
+                "sender": null,
+                "receiver": "mattia",
+                "amount": 10,
+                "reason": "mining reward",
+                "timestamp": 1637233584.6506815,
+                "is_encrypted": false
+            }
+        ],
+        "timestamp": 1637233584.6506815,
+        "previous_hash": "00055cf0398efe67a83ec54df56813e1ccc5c6f9294620b25cfeb4ab13dc821d",
+        "nonce": 748
+    }
+]

@@ -1,6 +1,7 @@
 from block import Block
 from transaction import Transaction
 from exceptions import OverspendingError, InvalidBlockchainError
+from blocks_db import blocks_db
 
 class Blockchain:
     """
@@ -23,7 +24,19 @@ class Blockchain:
         pending_transactions: transactions that have not been inserted in a block yet.
                               they have to be included in a block to become actually official
         """
-        self.chain = [self.create_genesis_block()]
+        # self.chain = []
+        # self.create_genesis_block()
+        
+        saved_blockchain = blocks_db.db
+
+        if len(saved_blockchain) == 0:
+            self.chain = []
+            self.create_genesis_block()
+            print('1')
+        else:
+            self.chain = saved_blockchain
+            print('2')
+
         self.pending_transactions = []
 
     def create_genesis_block(self):
@@ -33,7 +46,7 @@ class Blockchain:
         """
         genesis_block = Block(0, [], "000")
         self.proof_of_work(genesis_block)
-        return genesis_block
+        self.add_block(genesis_block)
 
     def add_block(self, block):
         """
@@ -42,6 +55,7 @@ class Blockchain:
         If not, throws InvalidBlockchainError
         """
         self.chain.append(block)
+        blocks_db.add(block)
         
         if not self.is_chain_valid():
             raise InvalidBlockchainError

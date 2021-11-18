@@ -61,7 +61,7 @@ def main():
         # signup
         elif command == 's':
             username = input('Enter username: ')
-            set_rand_pass = input('Do you want to set a random password? (y/n)')
+            set_rand_pass = input('Do you want to set a random password? (y/n) ')
         
             if set_rand_pass == 'y':
                 password = ''.join(random.choices(string.ascii_lowercase + string.digits, k = 10))
@@ -125,17 +125,18 @@ def main():
 
             reason = input('Enter reason: ')
             to_encrypt = input("Do you want to encrypt the reason of the transaction? (y/n) ")
-            key = None
 
             if to_encrypt == 'y':
                 key = input('Enter a key for encrypting the transiction reason: ')
+                aes = AESCipher(key)
+                reason = aes.encrypt(reason)
 
             transaction = Transaction(
                 auth.user.username,
                 receiver_username,
                 int(amount),
                 reason,
-                encryption_key=key
+                is_encrypted=to_encrypt
             )
 
             try:

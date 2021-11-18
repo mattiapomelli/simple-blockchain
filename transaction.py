@@ -3,7 +3,6 @@ from aes import AESCipher
 from printer import Printer
 
 class Transaction:
-
     """
     This class represents a transaction of the cryptocurrency.
     Transactions have to be stored inside a block in the chain to be considered official.
@@ -12,7 +11,7 @@ class Transaction:
     """
     next_id = 0
 
-    def __init__(self, sender, receiver, amount, reason, encryption_key = None):
+    def __init__(self, sender, receiver, amount, reason, is_encrypted = False):
         """
         id: id of the transaction
         sender: username of the user which is sending the money.
@@ -30,15 +29,9 @@ class Transaction:
         self.sender = sender
         self.receiver = receiver
         self.amount = amount
+        self.reason = reason
         self.timestamp = time()
-
-        if encryption_key is not None:
-            aes = AESCipher(encryption_key)
-            self.reason = aes.encrypt(reason)
-            self.is_encrypted = True
-        else:
-            self.reason = reason
-            self.is_encrypted = False
+        self.is_encrypted = is_encrypted
 
     def __str__(self):
         colored_receiver = Printer.colored(255, 209, 92, self.receiver)
