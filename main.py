@@ -7,8 +7,12 @@ from aes import AESCipher
 from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 from currency import Currency
+from certificates import CA
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
 import random
 import string
+import ast
 
 def main():
     blockchain = Blockchain()
@@ -69,7 +73,11 @@ def main():
             try:
                 auth.signup(username, password)
                 blockchain.reward(username, "initial reward")
+
+                CA.create_certificate(username)                
+
                 Printer.success(f"Created new user: {username}")
+                Printer.success(f"Created new certificate for {username}")
                 Printer.success(f"Signed in as {username}")
             except ConflictError:
                 Printer.error("Username is taken")
@@ -124,9 +132,23 @@ def main():
             to_encrypt = input("Do you want to encrypt the reason of the transaction? (y/n) ")
 
             if to_encrypt == 'y':
-                key = input('Enter a key for encrypting the transiction reason: ')
-                aes = AESCipher(key)
-                reason = aes.encrypt(reason)
+                # Get the certificate of the receiver
+                receiver_cert = CA.get_certificate(receiver_username)
+
+                # TODO: verify cert
+
+                # Get the receiver public key from his/her certificate
+                receiver_pub_key = CA.get_public_key(receiver_cert)
+
+                # Create a new RSA cipher from the receiver's public key
+                key = RSA.importKey(extern_key=receiver_pub_key)
+                cipher = PKCS1_OAEP.new(key)
+
+                # Encrypt the reason of the transaction
+                encrypted_reason = cipher.encrypt(reason.encode())
+
+                # Convert from bytes to string to make JSON serializable
+                reason = str(encrypted_reason)
 
             transaction = Transaction(
                 auth.user.username,
@@ -173,13 +195,22 @@ def main():
                 Printer.error("The transaction is not encrypted")
                 continue
             
-            key = input("Enter key to decrypt transaction reason: ")
-            aes = AESCipher(key)
+            # Get private key of the logged user
+            private_key = CA.get_private_key(auth.user.username)
+
+            # Create a new RSA cipher from the logged user's private key
+            key = RSA.importKey(extern_key=private_key)
+            cipher = PKCS1_OAEP.new(key)
 
             try:
-                reason = aes.decrypt(transaction.reason)
+                # Convert from string to bytes
+                encrypted_reason = ast.literal_eval(transaction.reason)
+
+                # Decrypt the reason of the transaction and convert from btyes to string
+                decrypted_reason = cipher.decrypt(encrypted_reason).decode()
+                
                 Printer.info("Reason of the transaction: ", end="")
-                print(reason)
+                print(decrypted_reason)
             except:
                 Printer.error("Invalid key")
 
@@ -190,7 +221,6 @@ def main():
                 continue
 
             Printer.info("Mining a new block with pending transactions...")
-            print('yooo')
             blockchain.mine(auth.user.username)
             Printer.success("Block has been mined and added to the chain")
             Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
