@@ -9,7 +9,7 @@ class Block:
     information with an hashing function.
     """
 
-    def __init__(self, index, transactions, previous_hash):
+    def __init__(self, index, transactions, previous_hash, nonce = 0):
         """
         index: index of the block in the chain
         transactions: transactions stored in the block
@@ -21,7 +21,7 @@ class Block:
         self.transactions = transactions 
         self.timestamp = time()
         self.previous_hash = previous_hash
-        self.nonce = 0
+        self.nonce = nonce
     
     def compute_hash(self):
         """

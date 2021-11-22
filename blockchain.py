@@ -27,15 +27,17 @@ class Blockchain:
         # self.chain = []
         # self.create_genesis_block()
         
-        saved_blockchain = blocks_db.db
+        saved_blockchain = blocks_db.get_blockchain()
+        print(saved_blockchain)
 
         if len(saved_blockchain) == 0:
             self.chain = []
             self.create_genesis_block()
-            print('1')
+            print("creating genesis block")
         else:
-            self.chain = saved_blockchain
-            print('2')
+            self.chain = list(saved_blockchain)
+            print("chained existing")
+            print(self.chain)
 
         self.pending_transactions = []
 
@@ -55,9 +57,10 @@ class Blockchain:
         If not, throws InvalidBlockchainError
         """
         self.chain.append(block)
-        blocks_db.add(block)
+        blocks_db.write_blockchain(self.chain)
         
         if not self.is_chain_valid():
+            print('yao')
             raise InvalidBlockchainError
     
     def is_chain_valid(self):
@@ -159,6 +162,7 @@ class Blockchain:
 
         self.proof_of_work(new_block)
         self.add_block(new_block)
+        # print
         self.pending_transactions = []
 
     def calculate_balance(self, username):
