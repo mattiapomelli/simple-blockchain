@@ -34,12 +34,12 @@ class Transaction:
         self.is_encrypted = is_encrypted
 
     def __str__(self):
-        colored_receiver = Printer.colored(255, 209, 92, self.receiver)
+        colored_receiver = Printer.get_info(self.receiver)
         
         if self.sender is None:
             main_text = f"{colored_receiver} received"
         else:
-            colored_sender = Printer.colored(255, 209, 92, self.sender)
+            colored_sender = Printer.get_info(self.sender)
             main_text = f"{colored_sender} paid {colored_receiver}"
 
         return f"Id: {self.id} - {main_text} {self.amount}$, reason: {self.reason}"

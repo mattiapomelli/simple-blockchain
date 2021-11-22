@@ -80,7 +80,7 @@ def main():
             password = input('Enter password: ')
             try:
                 auth.signin(username, password)
-                Printer.success(f"Signed is as {username}")
+                Printer.success(f"Signed in as {username}")
             except NotFoundError:
                 Printer.error(f"No user exists with username {username}")
             except InvalidCredentialsError:
@@ -133,7 +133,7 @@ def main():
                 receiver_username,
                 int(amount),
                 reason,
-                is_encrypted=to_encrypt
+                is_encrypted= True if to_encrypt == 'y' else False
             )
 
             try:
@@ -190,6 +190,7 @@ def main():
                 continue
 
             Printer.info("Mining a new block with pending transactions...")
+            print('yooo')
             blockchain.mine(auth.user.username)
             Printer.success("Block has been mined and added to the chain")
             Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")

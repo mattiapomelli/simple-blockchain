@@ -24,20 +24,14 @@ class Blockchain:
         pending_transactions: transactions that have not been inserted in a block yet.
                               they have to be included in a block to become actually official
         """
-        # self.chain = []
-        # self.create_genesis_block()
-        
         saved_blockchain = blocks_db.get_blockchain()
         print(saved_blockchain)
 
         if len(saved_blockchain) == 0:
             self.chain = []
             self.create_genesis_block()
-            print("creating genesis block")
         else:
             self.chain = list(saved_blockchain)
-            print("chained existing")
-            print(self.chain)
 
         self.pending_transactions = []
 
