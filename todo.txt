@@ -1,4 +1,46 @@
 CONCEPTS TO USE:
+[ ] Asymmetric Encryption:
+      - to encrypt transactions' reason (using public key of the receiver)
+
+[ ] Symmetric Encryption:
+      - to encrypt user's data stored in the db
+        - we can store the username (or the address when introduced) as plain text, because
+        other users need it to perform transactions
+        - other private personal information required on signup is gonna be saved encrypted in the db
+          (using user's password as the key)
+        - a new command to see personal info with password
+
+[ ] Authentication (Report):
+      - tell the reason why we use a particular authentication method over the other ones
+
+[ ] Digital Signatures:
+      - to sign transactions
+
+[ ] Password Storage:
+      - use a Key Derivation Function + Salt (pbkdf2) instead of a single hash function 
+
+[ ] Certification Authority:
+      - one certification authority will give the keys to the users
+
+
+TO REVISE FROM 1ST DELIVERY:
+[ ] AES (Report):
+      - we cannot take the key length for granted. We have to specify why we are using
+        a specific key length
+
+[ ] File Integrity:
+      - we should verify the integrity of the files used: check that has not been corrupted when
+        starting the application
+        - compute its hash every time that the file is changed and stored it somewhere
+        - calculate the hash when the application starts and compared it to the stored one
+        - how to protect hash file integrity:
+          => relying on cryptography, digital signatures or asymmetric encryption can help us
+
+      Would be spectacular to: Having a backup of information if something goes wrong.
+      Otherwise just restart the application
+
+____
+
 [X] Randomness:
       - to determine the value of the currency
       - suggest a random password to the user when signing up
@@ -25,12 +67,12 @@ FEATURES:
     - Extra verifications
         - verify chain function: check that previous hashes are consistent
         - verify block integrity and validity when adding it to the chain (hash starts with 000..) (see example projects)
+    - Store Blockchain in some file
 
   - TO IMPLEMENT:
     PRIORITY:
-    - Document/Comment
-    - Check for todos around the project
-    - Add validation for inputs
+        - ensure that if the file is modified we can detect it
+
 
     FUTURE:
     - Sign Transactions
@@ -46,9 +88,12 @@ FEATURES:
     - Simulate errors when trying to corrupt data
     - Keep user logged in
     - Better error handling in cli input:
-        - username, password: must be longer tha tot characters
-    - Persist blockchain (saving it in a file)
-    -list of commands should be visable after for example 3 bad uses of commands, after asking the user if he wants to display it again
+        - username, password: must be longer than tot characters
+
+
+
+BUGS
+- check that key length is not greater then 128 bits
 
 CODING FEATURES/OPTIMIZATIONS
 - don't store key in aes cipher, but pass key to decrypt method?
