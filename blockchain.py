@@ -25,7 +25,6 @@ class Blockchain:
                               they have to be included in a block to become actually official
         """
         saved_blockchain = blocks_db.get_blockchain()
-        print(saved_blockchain)
 
         if len(saved_blockchain) == 0:
             self.chain = []
@@ -54,7 +53,6 @@ class Blockchain:
         blocks_db.write_blockchain(self.chain)
         
         if not self.is_chain_valid():
-            print('yao')
             raise InvalidBlockchainError
     
     def is_chain_valid(self):
@@ -156,7 +154,6 @@ class Blockchain:
 
         self.proof_of_work(new_block)
         self.add_block(new_block)
-        # print
         self.pending_transactions = []
 
     def calculate_balance(self, username):

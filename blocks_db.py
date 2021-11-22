@@ -14,7 +14,6 @@ class BlockDB:
         
         try:
             data = json.load(file)
-            print("loaded chain: ", data)
             blocks = []
 
             for b in data:
@@ -51,7 +50,6 @@ class BlockDB:
         """
         Writes the blockchain to the database (file)
         """
-        print(chain)
         file = open(self.db_path, 'w')
         serialized_chain = []
 
