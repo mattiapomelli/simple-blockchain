@@ -29,9 +29,13 @@ class Block:
         the block data (transactions), the hash of the previous block,
         the timestamp and the nonce
         """
+        transaction_str = ""
+        for t in self.transactions:
+            transaction_str += str(t) + " "
+
         hash = sha256()
         hash.update(
-            str(self.transactions).encode('utf-8') +
+            transaction_str.encode('utf-8') +
             str(self.timestamp).encode('utf-8') +
             str(self.previous_hash).encode('utf-8') +
             str(self.nonce).encode('utf-8')
@@ -55,5 +59,6 @@ class Block:
             f"\nTransactions: {transactions_str}"
             f"\nPrevious Hash: {str(self.previous_hash)}"
             f"\nHash: {str(self.compute_hash())}"
+            f"\nNonce: {str(self.nonce)}"
             "\n--------------------"
         )
