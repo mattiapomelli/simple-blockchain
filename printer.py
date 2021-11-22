@@ -4,16 +4,20 @@ init(convert=True)
 class Printer:
     @staticmethod
     def error(text, end = '\n'):
-        print(Fore.RED + text + Style.RESET_ALL, end = end)
+        print(Fore.LIGHTRED_EX + text + Style.RESET_ALL, end = end)
 
     @staticmethod
     def success(text, end = '\n'):
-        print(Fore.GREEN + text + Style.RESET_ALL, end = end)
+        print(Fore.LIGHTGREEN_EX + text + Style.RESET_ALL, end = end)
 
     @staticmethod
     def info(text, end = '\n'):
-        print(Fore.YELLOW + text + Style.RESET_ALL, end = end)
+        print(Fore.LIGHTYELLOW_EX + text + Style.RESET_ALL, end = end)
     
     @staticmethod
     def cyan(text, end = '\n'):
-        print(Fore.CYAN + text + Style.RESET_ALL, end = end)
+        print(Fore.LIGHTCYAN_EX + text + Style.RESET_ALL, end = end)
+    
+    @staticmethod
+    def get_info(text):
+        return Fore.LIGHTYELLOW_EX + text + Style.RESET_ALL
