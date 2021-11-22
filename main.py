@@ -36,23 +36,20 @@ def main():
         
         print("List of commands: ")
         for key, value in commands.items():
-            colored_key = Printer.colored(255, 213, 0, key)
-            colored_value = Printer.colored(200, 200, 200, value)
-            print(f"{colored_key} - {colored_value}")
+            Printer.info(key, end=' - ')
+            print(value)
         
         print("Commands available after login: ")
         for key, value in commands_after_login.items():
-            colored_key = Printer.colored(255, 213, 0, key)
-            colored_value = Printer.colored(200, 200, 200, value)
-            print(f"{colored_key} - {colored_value}")
+            Printer.info(key, end=' - ')
+            print(value)
     
-    Printer.info(currency)
+    Printer.info(currency.__str__())
     print_list_of_commands()
 
     while True:
-        text = '>>> Select a command to execute: '
-        colored_text = Printer.colored(135, 185, 199, text)
-        command = input(colored_text)
+        Printer.cyan(">>> Select a command to execute: ", end="")
+        command = input()
 
         # print list of commands:
         if command == 'c':

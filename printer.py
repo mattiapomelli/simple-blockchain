@@ -1,19 +1,19 @@
+from colorama import init, Fore, Style
+init(convert=True)
+
 class Printer:
     @staticmethod
-    def colored(r, g, b, text):
-        return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
-
-    @staticmethod
     def error(text, end = '\n'):
-        colored_text = Printer.colored(247, 64, 54, text)
-        print(colored_text, end = end)
+        print(Fore.RED + text + Style.RESET_ALL, end = end)
 
     @staticmethod
     def success(text, end = '\n'):
-        colored_text = Printer.colored(49, 235, 102, text)
-        print(colored_text, end = end)
+        print(Fore.GREEN + text + Style.RESET_ALL, end = end)
 
     @staticmethod
     def info(text, end = '\n'):
-        colored_text = Printer.colored(252, 250, 174, text)
-        print(colored_text, end = end)
+        print(Fore.YELLOW + text + Style.RESET_ALL, end = end)
+    
+    @staticmethod
+    def cyan(text, end = '\n'):
+        print(Fore.CYAN + text + Style.RESET_ALL, end = end)
