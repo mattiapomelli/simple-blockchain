@@ -1,4 +1,3 @@
-from Crypto import Random
 from Crypto.Cipher import AES
 from Crypto.Util import Counter
 from base64 import b64encode, b64decode
