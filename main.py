@@ -186,6 +186,12 @@ def main():
 
             try:
                 blockchain.add_transaction(transaction)
+
+                if to_encrypt == 'y':
+                    Printer.success("Transaction reason has been encrypted with public key of ", end='')
+                    Printer.info(receiver_username, end='')
+                    Printer.success(". He/She's the only one who can see it")
+
                 Printer.success("Added transaction to pending transactions")
             except OverspendingError:
                 Printer.error("You don't have enough money to perform this transaction")
