@@ -81,6 +81,7 @@ def main():
 
                 blockchain.reward(username, "initial reward")
 
+                # Create a public key certificate for the new user
                 CA.create_certificate(username)                
 
                 Printer.success(f"Created new user: {username}")

@@ -2,9 +2,9 @@
     {
         "index": 0,
         "transactions": [],
-        "timestamp": 1637233564.2408855,
+        "timestamp": 1637583139.7712047,
         "previous_hash": "000",
-        "nonce": 1129
+        "nonce": 2385
     },
     {
         "index": 1,
@@ -15,13 +15,13 @@
                 "receiver": "mattia",
                 "amount": 10,
                 "reason": "mining reward",
-                "timestamp": 1637233568.7698617,
+                "timestamp": 1637583143.9740078,
                 "is_encrypted": false
             }
         ],
-        "timestamp": 1637233568.7698617,
-        "previous_hash": "000b976e6a37c035168f67fdd749a470ac40c82ca9340919315bab31c6a84db0",
-        "nonce": 4729
+        "timestamp": 1637583143.9740078,
+        "previous_hash": "000f3f90d1855daa87c970c5ce41cf06c4348934b2ea134c90dc82d9a558c363",
+        "nonce": 7709
     },
     {
         "index": 2,
@@ -30,10 +30,10 @@
                 "id": 1,
                 "sender": "mattia",
                 "receiver": "stefano",
-                "amount": 8,
-                "reason": "VlUb4NVtrZC07TTRQ4j4lg==",
-                "timestamp": 1637233580.446179,
-                "is_encrypted": "y"
+                "amount": 5,
+                "reason": "b'}\\xe0\\x8d&\\xde\\xeb\\x86\\xa7\\xb7\\xe1\\x8c\\x94\\x96~\\xd1\\xce3F\\x05uK\\xb60\\x932<\\xa0\\x7fXn\\x9b\\xee\\xd7uUSDeXb\\xd4fptyw@\\xce\\xcd\\xf4X\\x1b\\x12\\xa3\\xf4\\x96l\\x85\\x00\\xa9\\x19s$tt\\xa9\\xa6M5\\xdb\\xaa\\xc2\\xe8\\xbb%\\xda\\xbdL\\x88D\\x94\\x9b\\xa9\\x92\\xaa&\\xac\\xb3\\x19\\xb4\\xb2=\\xc9\\x85v\\x1a\"s\\xd9c\\x04)\\x91\\xed\\xaf2b,:7|\\x8d\\xf52\\xb6m\\xe4W\\xfe\\xc9|\\xefA\\x84\\xe9\\x06\\xd4\\r\\x05\\xa4B\\x11\\xbdG9C\\xc7\\xbc.:r0\\tG\\xf9T\\xe2\\x82\\xecS_=9}\\xc2\\x16Bv\\xa9\\xd7\\xd9\\x82\\xcb\\x11\\xce\\x00\\xa0M\\xdc\\x11\\xab\\xe7bn\\xd3\\x1bGy[\\xfa6\\xc6\\n\\'\\xa3\\xd4\\ne\\x9cn\\x06_<\\xba\\x97\\xc9\\x92^\\xf0\\x8c\\xa8!t\\xa0\\x1f\\x86\\xa2\\xfb\\xd6\\xa9\\xf7\\xbc\\xfb\\xa5\\xe3\\xc5\\xf7\\x92J3\\xc7\\x17\\x9d\\xf7\\xf9\\x98`2L\\xba\\xeai\\x86j#\\xd7\\xdd\\x17\\xe7S/)\\x18f\\xd8\\xe1\\x14G\\xd4\\xd7\\x11Y\\x91\\xd2\\x19\\xe5'",
+                "timestamp": 1637583150.0349228,
+                "is_encrypted": true
             },
             {
                 "id": 2,
@@ -41,12 +41,12 @@
                 "receiver": "mattia",
                 "amount": 10,
                 "reason": "mining reward",
-                "timestamp": 1637233584.6506815,
+                "timestamp": 1637583151.7743247,
                 "is_encrypted": false
             }
         ],
-        "timestamp": 1637233584.6506815,
-        "previous_hash": "00055cf0398efe67a83ec54df56813e1ccc5c6f9294620b25cfeb4ab13dc821d",
-        "nonce": 748
+        "timestamp": 1637583151.7743247,
+        "previous_hash": "000b7ac6f429063bf7d98d5e4f2097b141b8975de79ea39df879ad0a481c1fbb",
+        "nonce": 1486
     }
 ]

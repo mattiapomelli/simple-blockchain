@@ -94,6 +94,7 @@ FEATURES:
 
 BUGS
 - check that key length is not greater then 128 bits
+- what happens if not padding is needed? THe unpad method will remove something anyways?
 
 CODING FEATURES/OPTIMIZATIONS
 - don't store key in aes cipher, but pass key to decrypt method?
@@ -104,3 +105,5 @@ CODING FEATURES/OPTIMIZATIONS
   - ...
   - don't keep db attribute but open file every time?
 - user @property on block to recompute hash every time something changes?
+- (save certificate inside user class? and get it on login)
+- close files
