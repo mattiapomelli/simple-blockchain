@@ -8,11 +8,9 @@ from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 from currency import Currency
 from certificates import CA
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
+from rsa import RSACipher
 import random
 import string
-import ast
 
 def main():
     blockchain = Blockchain()
@@ -76,9 +74,6 @@ def main():
             
             try:
                 auth.signup(username, password, email)
-                
-                
-
                 blockchain.reward(username, "initial reward")
 
                 # Create a public key certificate for the new user
@@ -162,19 +157,12 @@ def main():
                 receiver_cert = CA.get_certificate(receiver_username)
 
                 # TODO: verify cert
-
                 # Get the receiver public key from his/her certificate
                 receiver_pub_key = CA.get_public_key(receiver_cert)
 
-                # Create a new RSA cipher from the receiver's public key
-                key = RSA.importKey(extern_key=receiver_pub_key)
-                cipher = PKCS1_OAEP.new(key)
-
-                # Encrypt the reason of the transaction
-                encrypted_reason = cipher.encrypt(reason.encode())
-
-                # Convert from bytes to string to make JSON serializable
-                reason = str(encrypted_reason)
+                # Encrypt the reason of the transaction with the receiver's public key
+                encrypted_reason = RSACipher.encrypt(reason, receiver_pub_key)
+                reason = encrypted_reason
 
             transaction = Transaction(
                 auth.user.username,
@@ -190,7 +178,7 @@ def main():
                 if to_encrypt == 'y':
                     Printer.success("Transaction reason has been encrypted with public key of ", end='')
                     Printer.info(receiver_username, end='')
-                    Printer.success(". He/She's the only one who can see it")
+                    Printer.success(". He/She's the only one who can see it.")
 
                 Printer.success("Added transaction to pending transactions")
             except OverspendingError:
@@ -230,16 +218,9 @@ def main():
             # Get private key of the logged user
             private_key = CA.get_private_key(auth.user.username)
 
-            # Create a new RSA cipher from the logged user's private key
-            key = RSA.importKey(extern_key=private_key)
-            cipher = PKCS1_OAEP.new(key)
-
             try:
-                # Convert from string to bytes
-                encrypted_reason = ast.literal_eval(transaction.reason)
-
-                # Decrypt the reason of the transaction and convert from btyes to string
-                decrypted_reason = cipher.decrypt(encrypted_reason).decode()
+                # Decrypt the reason of the transaction with the private key of the logged user
+                decrypted_reason = RSACipher.decrypt(transaction.reason, private_key)
                 
                 Printer.info("Reason of the transaction: ", end="")
                 print(decrypted_reason)
