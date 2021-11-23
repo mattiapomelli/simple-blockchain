@@ -13,7 +13,7 @@ class Auth:
         """
         self.user = None
 
-    def signup(self, username, password):
+    def signup(self, username, password, email):
         """
         Creates a new user with the given username and password. Password is hashed with SHA256.
         Raises ConflictError if the username is already taken
@@ -24,8 +24,7 @@ class Auth:
             raise ConflictError
 
         hashed_password = sha256(password.encode()).hexdigest()
-
-        self.user = users_db.create(username, hashed_password)
+        self.user = users_db.create(username, hashed_password, email)
 
     def signin(self, username, password):
         """

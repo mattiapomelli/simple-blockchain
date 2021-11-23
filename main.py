@@ -69,9 +69,16 @@ def main():
                 Printer.success(f"This is your random generated password: {password}")
             else:
                 password = input('Enter password: ')
-                
+            
+            aes = AESCipher(password)
+            email = aes.encrypt(input('type email address: '))
+
+            
             try:
-                auth.signup(username, password)
+                auth.signup(username, password, email)
+                
+                
+
                 blockchain.reward(username, "initial reward")
 
                 CA.create_certificate(username)                
@@ -93,10 +100,28 @@ def main():
                 Printer.error(f"No user exists with username {username}")
             except InvalidCredentialsError:
                 Printer.error("Password is not correct")
+                
+        #print email
+        elif command == 'email':
+            key = input("enter password to decrypt email: ")
+            if key==password:
+                aes = AESCipher(key)
+                decrypted_email = aes.decrypt(auth.user.email)
+                Printer.info("email:  ", end="")
+                print(decrypted_email)
+            else: 
+                Printer.error("wrong password")
+                Printer.error("crypted mail look like this: ")
+                print(auth.user.email)
+            
+            
+
 
         # check current currency exchange rate
         elif command == 'e':
             Printer.info(currency)
+
+        
 
         # check logged user
         elif command == 'u':

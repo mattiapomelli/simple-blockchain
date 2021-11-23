@@ -27,12 +27,12 @@ class UserDB:
         except:
             self.reset()
 
-    def create(self, username, password):
+    def create(self, username, password, email):
         """
         Creates a new user and adds it to the database (writes the new list of users to the file)
         Returns the created user
         """
-        new_user = User(username, password)
+        new_user = User(username, password, email)
 
         self.db.append(new_user)
 
