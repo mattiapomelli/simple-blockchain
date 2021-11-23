@@ -50,10 +50,12 @@ class Blockchain:
         If not, throws InvalidBlockchainError
         """
         self.chain.append(block)
-        blocks_db.write_blockchain(self.chain)
         
         if not self.is_chain_valid():
             raise InvalidBlockchainError
+        
+        # Write the updated blockchain in the file
+        blocks_db.write_blockchain(self.chain)
     
     def is_chain_valid(self):
         """
