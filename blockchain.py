@@ -101,15 +101,17 @@ class Blockchain:
         If the transaction is overspending, raises OverspendingError.
         If the transaction has no sender, it means that it is a mining reward transaction, and so
         no balance should be checked.
+        If the transaction is not a mining reward transaction it gets signed before being added.
         """
-        sender_username = transaction.sender
-
-        if sender_username:
+        if not transaction.is_reward_transaction():
             # it's not a mining reward transaction
-            sender_balance = self.calculate_balance(sender_username)
+            sender_balance = self.calculate_balance(transaction.sender)
 
             if sender_balance < transaction.amount:
                 raise OverspendingError
+            
+            # Sign the transaction
+            transaction.sign()
 
         self.pending_transactions.append(transaction)
 
