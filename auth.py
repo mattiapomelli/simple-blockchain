@@ -1,5 +1,6 @@
 from users_db import users_db
 from hashlib import sha256
+from aes import AESCipher
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
 class Auth:
@@ -13,7 +14,7 @@ class Auth:
         """
         self.user = None
 
-    def signup(self, username, password, email):
+    def signup(self, username, password, email, phone_nr, address):
         """
         Creates a new user with the given username and password. Password is hashed with SHA256.
         Raises ConflictError if the username is already taken
@@ -23,8 +24,14 @@ class Auth:
         if existing_user is not None:
             raise ConflictError
 
+        aes = AESCipher(password)
+        encrypted_email = aes.encrypt(email)
+        encrypted_phone_nr = aes.encrypt(phone_nr)
+        encrypted_adress = aes.encrypt(address)
+
         hashed_password = sha256(password.encode()).hexdigest()
-        self.user = users_db.create(username, hashed_password, email)
+
+        self.user = users_db.create(username, hashed_password, encrypted_email, encrypted_phone_nr, encrypted_adress)
 
     def signin(self, username, password):
         """
@@ -52,3 +59,14 @@ class Auth:
         Returns True if a user is logged in, False otherwise
         """
         return self.user != None
+
+    def decrypt_personal_data(self, username, key):
+        
+        user = users_db.find_by_username(username)
+
+        aes = AESCipher(key)
+        email = aes.decrypt(user.email)
+        phone_nr = aes.decrypt(user.phone_nr)
+        address = aes.decrypt(user.address)
+        return "email: " + email + "\nphone_nr: " + phone_nr + "\naddress: " + address
+
