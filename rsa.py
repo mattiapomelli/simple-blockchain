@@ -2,6 +2,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Hash import SHA256
 from Crypto.Signature import pkcs1_15
+from base64 import b64encode, b64decode
 
 class RSACipher:
     """
@@ -17,8 +18,8 @@ class RSACipher:
         # Encrypt the message, after converting it from a string to bytes
         encrypted_message = cipher.encrypt(message.encode())
 
-        # Convert from bytes to string to an hex string
-        return encrypted_message.hex()
+        # Convert from bytes to a base64 string
+        return b64encode(encrypted_message).decode("utf-8")
 
     @staticmethod
     def decrypt(encrypted_message, private_key):
@@ -26,8 +27,8 @@ class RSACipher:
         rsa_key = RSA.importKey(extern_key=private_key)
         cipher = PKCS1_OAEP.new(rsa_key)
 
-        # Convert encrypted message from hex to bytes
-        encrypted_message_bytes = bytes.fromhex(encrypted_message)
+        # Convert encrypted message from a base64 string to bytes
+        encrypted_message_bytes = b64decode(encrypted_message)
         
         # Decrypt the ecrypted message, and convert it from btyes to string
         decrypted_message = cipher.decrypt(encrypted_message_bytes).decode()
