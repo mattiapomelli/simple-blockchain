@@ -35,7 +35,7 @@ class Transaction:
         self.receiver = receiver
         self.amount = amount
         self.reason = reason
-        self.timestamp = time()
+        self.timestamp = round(time() * 1000)
         self.is_encrypted = is_encrypted
         self.signature = None
 

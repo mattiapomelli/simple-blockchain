@@ -19,7 +19,7 @@ class Block:
         """
         self.index = index
         self.transactions = transactions 
-        self.timestamp = time()
+        self.timestamp = round(time() * 1000)
         self.previous_hash = previous_hash
         self.nonce = nonce
     
