@@ -23,7 +23,7 @@ class UserDB:
         try:
             data = json.load(file)
             # convert the users from json to User objects
-            self.db = [User(u['username'], u['password']) for u in data]
+            self.db = [User(u['username'], u['password'], u['email']) for u in data]
         except:
             self.reset()
 
