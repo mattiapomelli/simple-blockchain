@@ -24,10 +24,10 @@ class BlockDB:
                         t['receiver'],
                         t['amount'],
                         t['reason'],
-                        t['is_encrypted'],
-                        t["signature"]
+                        t['is_encrypted']
                     )
                     transaction.timestamp = t['timestamp']
+                    transaction.signature = t['signature']
                     transactions.append(transaction)
 
                 block = Block(

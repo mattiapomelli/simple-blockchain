@@ -15,7 +15,7 @@ class Transaction:
     """
     next_id = 0
 
-    def __init__(self, sender, receiver, amount, reason, is_encrypted = False, signature = None):
+    def __init__(self, sender, receiver, amount, reason, is_encrypted = False):
         """
         id: id of the transaction
         sender: username of the user which is sending the money.
@@ -37,7 +37,7 @@ class Transaction:
         self.reason = reason
         self.timestamp = time()
         self.is_encrypted = is_encrypted
-        self.signature = signature
+        self.signature = None
 
     def is_reward_transaction(self):
         """
