@@ -3,7 +3,6 @@ from users_db import users_db
 from transaction import Transaction
 from blockchain import Blockchain
 from exceptions import InvalidBlockchainError, OverspendingError
-from aes import AESCipher
 from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 from currency import Currency

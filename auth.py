@@ -24,10 +24,9 @@ class Auth:
         if existing_user is not None:
             raise ConflictError
 
-        aes = AESCipher(password)
-        encrypted_email = aes.encrypt(email)
-        encrypted_phone_nr = aes.encrypt(phone_nr)
-        encrypted_adress = aes.encrypt(address)
+        encrypted_email = AESCipher.encrypt(email, password)
+        encrypted_phone_nr = AESCipher.encrypt(phone_nr, password)
+        encrypted_adress = AESCipher.encrypt(address, password)
 
         hashed_password = sha256(password.encode()).hexdigest()
 
@@ -63,10 +62,9 @@ class Auth:
     def decrypt_personal_data(self, username, key):
         user = users_db.find_by_username(username)
 
-        aes = AESCipher(key)
-        email = aes.decrypt(user.email)
-        phone_nr = aes.decrypt(user.phone_nr)
-        address = aes.decrypt(user.address)
+        email = AESCipher.decrypt(user.email, key)
+        phone_nr = AESCipher.decrypt(user.phone_nr, key)
+        address = AESCipher.decrypt(user.address, key)
 
         return {
             "email": email,
