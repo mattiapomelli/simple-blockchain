@@ -19,8 +19,8 @@ class User:
         
     def __str__(self):
         return (
-            f"\Username: {self.username}"
-            f"\Email: {self.password}"
-            f"\Phone number: {self.phone_nr}"
-            f"\Address: {self.address}"
+            f"Username: {self.username}"
+            f"\nEmail: {self.password}"
+            f"\nPhone number: {self.phone_nr}"
+            f"\nAddress: {self.address}"
         )
