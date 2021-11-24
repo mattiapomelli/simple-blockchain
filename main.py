@@ -157,36 +157,31 @@ def main():
                 continue
 
             reason = input('Enter reason: ')
-            to_encrypt = input("Do you want to encrypt the reason of the transaction? (y/n) ")
 
-            if to_encrypt == 'y':
-                # Get the certificate of the receiver
-                receiver_cert = CA.get_certificate(receiver_username)
+            # Get the certificate of the receiver
+            receiver_cert = CA.get_certificate(receiver_username)
 
-                # TODO: verify cert
-                # Get the receiver public key from his/her certificate
-                receiver_pub_key = CA.get_public_key(receiver_cert)
+            # TODO: verify cert
+            # Get the receiver public key from his/her certificate
+            receiver_pub_key = CA.get_public_key(receiver_cert)
 
-                # Encrypt the reason of the transaction with the receiver's public key
-                encrypted_reason = RSACipher.encrypt(reason, receiver_pub_key)
-                reason = encrypted_reason
+            # Encrypt the reason of the transaction with the receiver's public key
+            encrypted_reason = RSACipher.encrypt(reason, receiver_pub_key)
 
             transaction = Transaction(
                 auth.user.username,
                 receiver_username,
                 int(amount),
-                reason,
-                is_encrypted= True if to_encrypt == 'y' else False
+                encrypted_reason,
+                is_encrypted= True
             )
 
             try:
                 blockchain.add_transaction(transaction)
 
-                if to_encrypt == 'y':
-                    Printer.success("Transaction reason has been encrypted with public key of ", end='')
-                    Printer.info(receiver_username, end='')
-                    Printer.success(". He/She's the only one who can see it.")
-
+                Printer.success("Transaction reason has been encrypted with public key of ", end='')
+                Printer.info(receiver_username, end='')
+                Printer.success(". He/She's the only one who can see it.")
                 Printer.success("Added transaction to pending transactions")
             except OverspendingError:
                 Printer.error("You don't have enough money to perform this transaction")
