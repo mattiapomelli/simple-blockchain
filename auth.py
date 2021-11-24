@@ -24,10 +24,12 @@ class Auth:
         if existing_user is not None:
             raise ConflictError
 
+        # Encrypt user's private data with AES, using its password as a key
         encrypted_email = AESCipher.encrypt(email, password)
         encrypted_phone_nr = AESCipher.encrypt(phone_nr, password)
         encrypted_adress = AESCipher.encrypt(address, password)
 
+        # Hash user's password before storing it in the database
         hashed_password = sha256(password.encode()).hexdigest()
 
         self.user = users_db.create(username, hashed_password, encrypted_email, encrypted_phone_nr, encrypted_adress)
@@ -46,6 +48,7 @@ class Auth:
         if user is None:
             raise NotFoundError
 
+        # Hash the provided password to compare it with the stored one
         hashed_password = sha256(password.encode()).hexdigest()
         
         if user.password != hashed_password:
@@ -60,8 +63,12 @@ class Auth:
         return self.user != None
 
     def decrypt_personal_data(self, username, key):
+        """
+        Decrypts the data of the user with the given username, using the given key
+        """
         user = users_db.find_by_username(username)
 
+        # Decrypt user's private data with AES
         email = AESCipher.decrypt(user.email, key)
         phone_nr = AESCipher.decrypt(user.phone_nr, key)
         address = AESCipher.decrypt(user.address, key)
