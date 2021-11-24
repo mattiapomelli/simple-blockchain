@@ -1,5 +1,9 @@
 from users_db import users_db
 from Crypto.Hash import SHA256
+from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Hash import SHA256
+from Crypto.Random import get_random_bytes
+from base64 import b64encode, b64decode
 from aes import AESCipher
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
@@ -29,8 +33,14 @@ class Auth:
         encrypted_phone_nr = AESCipher.encrypt(phone_nr, password)
         encrypted_adress = AESCipher.encrypt(address, password)
 
-        # Hash user's password before storing it in the database
-        hashed_password = SHA256.new(password.encode()).hexdigest()
+        # Generate a random salt
+        salt = get_random_bytes(16)
+
+        # Hash the password with PBKDF2 and the generated salt
+        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=1000000, hmac_hash_module=SHA256)
+
+        # Convert the hashed password from bytes to string, after appending the salt at the end
+        hashed_password = b64encode(hashed_password_bytes + salt).decode("utf-8")
 
         self.user = users_db.create(username, hashed_password, encrypted_email, encrypted_phone_nr, encrypted_adress)
 
@@ -48,10 +58,20 @@ class Auth:
         if user is None:
             raise NotFoundError
 
-        # Hash the provided password to compare it with the stored one
-        hashed_password = SHA256.new(password.encode()).hexdigest()
-        
-        if user.password != hashed_password:
+        # Convert the stored password from string to bytes
+        stored_password_bytes = b64decode(user.password)
+
+        # Get the salt from the stored password by extxracting the last 16 bytes
+        salt = stored_password_bytes[-16:]
+
+        # Hash the provided password with PBKDF2 and the obtained salt
+        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=1000000, hmac_hash_module=SHA256)
+
+        # Convert the hashed password from bytes to string
+        hashed_password = b64encode(hashed_password_bytes  + salt).decode("utf-8")
+
+        # Compare the result with the stored password
+        if hashed_password != user.password:
             raise InvalidCredentialsError
         
         self.user = user
