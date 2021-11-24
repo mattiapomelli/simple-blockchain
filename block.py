@@ -1,4 +1,4 @@
-from hashlib import sha256
+from Crypto.Hash import SHA256
 from time import time
 
 class Block:
@@ -33,8 +33,7 @@ class Block:
         for t in self.transactions:
             transaction_str += str(t) + " "
 
-        hash = sha256()
-        hash.update(
+        hash = SHA256.new(
             transaction_str.encode('utf-8') +
             str(self.timestamp).encode('utf-8') +
             str(self.previous_hash).encode('utf-8') +

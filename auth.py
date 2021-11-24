@@ -1,5 +1,5 @@
 from users_db import users_db
-from hashlib import sha256
+from Crypto.Hash import SHA256
 from aes import AESCipher
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 
@@ -30,7 +30,7 @@ class Auth:
         encrypted_adress = AESCipher.encrypt(address, password)
 
         # Hash user's password before storing it in the database
-        hashed_password = sha256(password.encode()).hexdigest()
+        hashed_password = SHA256.new(password.encode()).hexdigest()
 
         self.user = users_db.create(username, hashed_password, encrypted_email, encrypted_phone_nr, encrypted_adress)
 
@@ -49,7 +49,7 @@ class Auth:
             raise NotFoundError
 
         # Hash the provided password to compare it with the stored one
-        hashed_password = sha256(password.encode()).hexdigest()
+        hashed_password = SHA256.new(password.encode()).hexdigest()
         
         if user.password != hashed_password:
             raise InvalidCredentialsError
