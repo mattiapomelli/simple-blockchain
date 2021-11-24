@@ -4,7 +4,8 @@ from base64 import b64encode, b64decode
 
 class AESCipher:
     """
-    This class represents an AES cipher
+    This class represents an AES cipher.
+    It is used both for encryption/decryption and for digital signatures 
     """
 
     @staticmethod
