@@ -46,20 +46,19 @@ class Blockchain:
     def add_block(self, block):
         """
         Adds a new block to the end of the chain.
-        After adding the new block verifies that the chain is still valid.
-        If not, throws InvalidBlockchainError
+        After adding validates the chain.
+        If everything goes well, saves the new blockchain to the database file
         """
         self.chain.append(block)
         
-        if not self.is_chain_valid():
-            raise InvalidBlockchainError
+        self.validate_chain()
         
-        # Write the updated blockchain in the file
+        # Write the updated blockchain in the database file
         blocks_db.write_blockchain(self.chain)
     
-    def is_chain_valid(self):
+    def validate_chain(self):
         """
-        Returns True if the blockchain is valid, False otherwise.
+        Checks if the blockchain is valid. If not, throws InvalidBlockchainError
         A blockchain is valid if:
         - the blocks are correctly chained together: for every block except the first one, the
           value of previous_hash is equal to the hash of the previous block in the chain
@@ -73,22 +72,17 @@ class Blockchain:
             if index > 0:
                 previous_block = self.chain[index-1]
                 if not block.previous_hash == previous_block.compute_hash():
-                    print(f"Block number {block.index} has an unvalid previous hash")
-                    return False
+                    raise InvalidBlockchainError(f"Block number {block.index} has an unvalid previous hash")
 
             # Check that every transaction in the block is valid
             for t in block.transactions:
                 if not t.is_valid():
-                    print(f"Transaction number {t.id} has an invalid signature")
-                    return False
+                    raise InvalidBlockchainError(f"Transaction number {t.id} has an invalid signature")
 
             # Check that the block hash is valid
             hash = block.compute_hash()
             if not hash.startswith('0' * self.difficulty):
-                print(f"Block number {block.index} has an unvalid hash")
-                return False
-        
-        return True
+                raise InvalidBlockchainError(f"Block number {block.index} has an unvalid hash")
 
     def proof_of_work(self, block):
         """

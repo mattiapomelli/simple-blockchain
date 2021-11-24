@@ -2,7 +2,7 @@ from auth import Auth
 from users_db import users_db
 from transaction import Transaction
 from blockchain import Blockchain
-from exceptions import OverspendingError
+from exceptions import InvalidBlockchainError, OverspendingError
 from aes import AESCipher
 from printer import Printer
 from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
@@ -65,7 +65,8 @@ def main():
         
             if set_rand_pass == 'y':
                 password = ''.join(random.choices(string.ascii_lowercase + string.digits, k = 10))
-                Printer.success(f"This is your random generated password: {password}")
+                Printer.info(f"This is your random generated password: ", end='')
+                print(password)
             else:
                 password = input('Enter password: ')
             
@@ -80,9 +81,13 @@ def main():
                 # Create a public key certificate for the new user
                 CA.create_certificate(username)                
 
-                Printer.success(f"Created new user: {username}")
-                Printer.success(f"Created new certificate for {username}")
-                Printer.success(f"Signed in as {username}")
+                Printer.success("Created new user: ", end='')
+                Printer.info(username)
+                Printer.success(f"Your private data has been encrypted")
+                Printer.success("Created new certificate for ", end='')
+                Printer.info(username)
+                Printer.success(f"Signed in as ", end='')
+                Printer.info(username)
             except ConflictError:
                 Printer.error("Username is taken")
         
@@ -237,9 +242,13 @@ def main():
                 continue
 
             Printer.info("Mining a new block with pending transactions...")
-            blockchain.mine(auth.user.username)
-            Printer.success("Block has been mined and added to the chain")
-            Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
+            
+            try:
+                blockchain.mine(auth.user.username)
+                Printer.success("Block has been mined and added to the chain")
+                Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
+            except InvalidBlockchainError as e:
+                Printer.error("Invalid Blockchain: "+ str(e))
 
         # print the blockchain
         elif command == 'b':
