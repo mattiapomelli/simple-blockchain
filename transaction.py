@@ -1,5 +1,4 @@
 from time import time
-from aes import AESCipher
 from printer import Printer
 
 class Transaction:

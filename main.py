@@ -35,7 +35,8 @@ def main():
             "m": "mine a block",
             "b": "print blockchain",
             "ba": "print user balance",
-            "dt": "decrypt the reason of a transaction"
+            "dt": "decrypt the reason of a transaction",
+            "pd": "print personal data"
         }
         
         print("List of commands: ")
@@ -70,15 +71,15 @@ def main():
             else:
                 password = input('Enter password: ')
             
-            aes = AESCipher(password)
-            email = aes.encrypt(input('type email address: '))
+            
+            email = input('Enter email address: ')
+            phone_nr = input('Enter phone number: ')
+            address = input('Enter address for correspondence: ')
 
             
             try:
-                auth.signup(username, password, email)
-                
-                
-
+                auth.signup(username, password, email, phone_nr, address)
+            
                 blockchain.reward(username, "initial reward")
 
                 # Create a public key certificate for the new user
@@ -102,18 +103,25 @@ def main():
             except InvalidCredentialsError:
                 Printer.error("Password is not correct")
                 
-        #print email
-        elif command == 'email':
-            key = input("enter password to decrypt email: ")
-            if key==password:
-                aes = AESCipher(key)
-                decrypted_email = aes.decrypt(auth.user.email)
-                Printer.info("email:  ", end="")
-                print(decrypted_email)
+        #print personal data
+        elif command == 'pd':
+            
+            key = input("enter password to print personal data: ")
+
+            list = ['email: ','phone: ','address: ']
+            encrypted_data = [auth.user.email, auth.user.phone_nr, auth.user.address]
+
+            if key == password:
+
+                personal_data = auth.decrypt_personal_data(username, key)
+                Printer.info(personal_data)
             else: 
                 Printer.error("wrong password")
-                Printer.error("crypted mail look like this: ")
-                print(auth.user.email)
+                Printer.error("crypted Personal data look like this, like this: ")
+
+                for word_1, word_2 in zip(list, encrypted_data):
+                    print(word_1, end='')
+                    Printer.info(word_2)
             
             
 
@@ -265,6 +273,8 @@ def main():
             Printer.info("Your balance is: ", end="")
             print(f"{str(blockchain.calculate_balance(auth.user.username))}$")
 
+
+
         # quit application
         elif command == 'q':
             Printer.info("Quitting application...")
@@ -273,6 +283,8 @@ def main():
         # invalid command
         else:
             Printer.error('Invalid command')
+
+        
 
 if __name__ == "__main__":
     main()
