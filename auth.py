@@ -61,12 +61,15 @@ class Auth:
         return self.user != None
 
     def decrypt_personal_data(self, username, key):
-        
         user = users_db.find_by_username(username)
 
         aes = AESCipher(key)
         email = aes.decrypt(user.email)
         phone_nr = aes.decrypt(user.phone_nr)
         address = aes.decrypt(user.address)
-        return "email: " + email + "\nphone_nr: " + phone_nr + "\naddress: " + address
 
+        return {
+            "email": email,
+            "phone_nr": phone_nr,
+            "address": address
+        }

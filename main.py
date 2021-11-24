@@ -71,11 +71,9 @@ def main():
             else:
                 password = input('Enter password: ')
             
-            
             email = input('Enter email address: ')
             phone_nr = input('Enter phone number: ')
             address = input('Enter address for correspondence: ')
-
             
             try:
                 auth.signup(username, password, email, phone_nr, address)
@@ -103,34 +101,25 @@ def main():
             except InvalidCredentialsError:
                 Printer.error("Password is not correct")
                 
-        #print personal data
+        # print personal data
         elif command == 'pd':
-            
-            key = input("enter password to print personal data: ")
+            if not auth.is_logged():
+                Printer.error("You must be logged in to see your personal data")
+                continue
 
-            list = ['email: ','phone: ','address: ']
-            encrypted_data = [auth.user.email, auth.user.phone_nr, auth.user.address]
+            key = input("Enter your password to see your personal data: ")
 
-            if key == password:
-
+            try:
                 personal_data = auth.decrypt_personal_data(username, key)
-                Printer.info(personal_data)
-            else: 
-                Printer.error("wrong password")
-                Printer.error("crypted Personal data look like this, like this: ")
 
-                for word_1, word_2 in zip(list, encrypted_data):
-                    print(word_1, end='')
-                    Printer.info(word_2)
-            
-            
-
-
-        # check current currency exchange rate
-        elif command == 'e':
-            Printer.info(currency)
-
-        
+                Printer.info("email: ", end='')
+                print(personal_data["email"])
+                Printer.info("phone number: ", end='')
+                print(personal_data["phone_nr"])
+                Printer.info("address : ", end='')
+                print(personal_data["address"])
+            except: 
+                Printer.error("Wrong password")
 
         # check logged user
         elif command == 'u':
@@ -138,6 +127,10 @@ def main():
                 Printer.info("Logged user: " + auth.user.username)
             else:
                 Printer.info("No user is logged in")
+
+        # check current currency exchange rate
+        elif command == 'e':
+            Printer.info(currency)
 
         # perform a new transaction
         elif command == 't':

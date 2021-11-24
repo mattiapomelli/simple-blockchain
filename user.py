@@ -14,10 +14,13 @@ class User:
         self.username = username
         self.password = password
         self.email = email
-        self.address = address
         self.phone_nr  = phone_nr
+        self.address = address
         
-        
-
     def __str__(self):
-        return "Id: " + self.id + ", Username: " + self.username + "\n"
+        return (
+            f"\Username: {self.username}"
+            f"\Email: {self.password}"
+            f"\Phone number: {self.phone_nr}"
+            f"\Address: {self.address}"
+        )
