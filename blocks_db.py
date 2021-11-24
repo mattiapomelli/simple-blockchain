@@ -27,6 +27,7 @@ class BlockDB:
                         t['is_encrypted']
                     )
                     transaction.timestamp = t['timestamp']
+                    transaction.signature = t['signature']
                     transactions.append(transaction)
 
                 block = Block(

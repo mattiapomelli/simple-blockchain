@@ -50,30 +50,43 @@ class Blockchain:
         If not, throws InvalidBlockchainError
         """
         self.chain.append(block)
-        blocks_db.write_blockchain(self.chain)
         
         if not self.is_chain_valid():
             raise InvalidBlockchainError
+        
+        # Write the updated blockchain in the file
+        blocks_db.write_blockchain(self.chain)
     
     def is_chain_valid(self):
         """
         Returns True if the blockchain is valid, False otherwise.
         A blockchain is valid if:
-        - every block's hash is valid, so it starts with a consecutive number of 0s given by
-          the blockchain's difficulty
         - the blocks are correctly chained together: for every block except the first one, the
           value of previous_hash is equal to the hash of the previous block in the chain
+        - for every block, all the transactions that contains are valid (the signature is correctly verified)
+        - every block's hash is valid, so it starts with a consecutive number of 0s given by
+          the blockchain's difficulty (the block has computed the proof of work)
         """
         for index, block in enumerate(self.chain):
-            hash = block.compute_hash()
 
-            if not hash.startswith('0' * self.difficulty):
-                return False
-            
+            # Check that blocks are chained together correctly
             if index > 0:
                 previous_block = self.chain[index-1]
                 if not block.previous_hash == previous_block.compute_hash():
+                    print(f"Block number {block.index} has an unvalid previous hash")
                     return False
+
+            # Check that every transaction in the block is valid
+            for t in block.transactions:
+                if not t.is_valid():
+                    print(f"Transaction number {t.id} has an invalid signature")
+                    return False
+
+            # Check that the block hash is valid
+            hash = block.compute_hash()
+            if not hash.startswith('0' * self.difficulty):
+                print(f"Block number {block.index} has an unvalid hash")
+                return False
         
         return True
 
@@ -101,15 +114,17 @@ class Blockchain:
         If the transaction is overspending, raises OverspendingError.
         If the transaction has no sender, it means that it is a mining reward transaction, and so
         no balance should be checked.
+        If the transaction is not a mining reward transaction it gets signed before being added.
         """
-        sender_username = transaction.sender
-
-        if sender_username:
+        if not transaction.is_reward_transaction():
             # it's not a mining reward transaction
-            sender_balance = self.calculate_balance(sender_username)
+            sender_balance = self.calculate_balance(transaction.sender)
 
             if sender_balance < transaction.amount:
                 raise OverspendingError
+            
+            # Sign the transaction
+            transaction.sign()
 
         self.pending_transactions.append(transaction)
 

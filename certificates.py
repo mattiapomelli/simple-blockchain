@@ -10,8 +10,6 @@ class CA:
         k = crypto.PKey()
         k.generate_key(crypto.TYPE_RSA, 2048)  # generate RSA key-pair
 
-        print(k)
-
         cert = crypto.X509()
         # TODO: add other fields such as country, etc..
         cert.gmtime_adj_notBefore(0)
@@ -19,21 +17,10 @@ class CA:
         cert.set_issuer(cert.get_subject())  # self-sign this certificate
 
         cert.set_pubkey(k)
-        print(cert.get_pubkey())
-
-        # print("Generated public key: ")
-        # print(crypto.dump_publickey(crypto.FILETYPE_PEM, k))
-        # print()
 
         cert.sign(k, 'sha256')
 
         open(f"certificates/{username}-cert.crt", 'wb').write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
-        
-        priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM, k)
-        # print("Generated private key: ")
-        # print(priv_key)
-        # print()
-
         open(f"keys/{username}-private.key", 'wb').write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
 
     @staticmethod
@@ -70,18 +57,3 @@ class CA:
 
         priv_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_data)
         return crypto.dump_privatekey(crypto.FILETYPE_PEM, priv_key)
-
-
-# create_certificate("prova")
-# cert = get_certificate("prova")
-
-# print("Obtained cert", cert)
-# print()
-
-# print("Obtained public key: ")
-# print(get_public_key(cert))
-# print()
-
-# print("Obtained private key: ")
-# print(get_private_key("prova"))
-
