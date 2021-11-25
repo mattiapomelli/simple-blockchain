@@ -45,7 +45,7 @@ class CertificationAuthority:
 
     def create_certificate(self, username):
         """
-        Creates a certificate for the user with the given username.
+        Creates and returns a certificate for the user with the given username.
         """
         # Generate an RSA key pair
         k = crypto.PKey()
@@ -67,17 +67,23 @@ class CertificationAuthority:
         open(f"certificates/{username}-cert.cer", 'wb').write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
         open(f"keys/{username}-private.key", 'wb').write(crypto.dump_privatekey(crypto.FILETYPE_PEM, k))
 
+        return cert
+
     def get_certificate(self, username):
         """
         Gets and returns the certificate of the user with the given username.
+        Returns None if no certificate is found.
         """
-        # Get the certificate from the corresponding file
-        cert_file = open(f"certificates/{username}-cert.cer", "r")
-        cert_data = cert_file.read()
-        cert_file.close()
+        try:
+            # Get the certificate from the corresponding file
+            cert_file = open(f"certificates/{username}-cert.cer", "r")
+            cert_data = cert_file.read()
+            cert_file.close()
 
-        cert = crypto.load_certificate(crypto.FILETYPE_PEM, cert_data)
-        return cert
+            cert = crypto.load_certificate(crypto.FILETYPE_PEM, cert_data)
+            return cert
+        except:
+            return None
 
     def verify_certificate(self, cert):
         """
@@ -121,6 +127,13 @@ class CertificationAuthority:
         priv_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_data)
         return crypto.dump_privatekey(crypto.FILETYPE_PEM, priv_key)
 
+    @property
+    def public_key_ca(self):
+        return self.get_public_key(self.cert_ca)
+
+    @property
+    def private_key_ca(self):
+        return self.get_private_key("ca")
 
 # Certification authority that will create and distribute public key certificates for the system
 CA = CertificationAuthority()

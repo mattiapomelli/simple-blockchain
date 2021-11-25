@@ -1,7 +1,11 @@
 import json
+
+from OpenSSL.crypto import sign
 from user import User
 from Crypto.Hash import SHA256
 from printer import Printer
+from rsa import RSACipher
+from certificates import CA
 
 class UserDB:
     """
@@ -16,6 +20,7 @@ class UserDB:
     db = None
     db_path = 'db/users.json'
     db_hash_path = 'db/users-hash.txt'
+    db_hash__signature_path = 'db/users-hash-signature.txt'
 
     def __init__(self):
         """
@@ -23,15 +28,36 @@ class UserDB:
         If there is an error opening the file, it resets the db to be empty.
         """
         file = open(self.db_path)
+
+        stored_cert = CA.get_certificate("users-db")
+        if stored_cert is None:
+            self.cert = CA.create_certificate("users-db")
+        else:
+            self.cert = stored_cert
         
         try:
             data = json.load(file)
+
+            # Compute the hash of the file content
             db_hash = SHA256.new(str(data).encode()).hexdigest()
             
             hash_file = open(self.db_hash_path, 'r')
+            signature_file = open(self.db_hash__signature_path, 'r')
+            
+            # Get the stored hash
             stored_hash = hash_file.read()
+            # Get the stored signature of the hash
+            signature = signature_file.read()
 
-            if (db_hash != stored_hash):
+            #Verify that the signature of the hash is valid, using the CA public key
+            db_public_key = CA.get_public_key(self.cert)
+
+            is_valid = RSACipher.verify(stored_hash, signature, db_public_key)
+            if not is_valid:
+                Printer.error("User database's hash or signature have been corrupted: signature is not valid")
+                raise SystemExit
+
+            if db_hash != stored_hash:
                 Printer.error("User database has has been corrupted: hashes don't match")
                 raise SystemExit
 
@@ -78,10 +104,15 @@ class UserDB:
         self.save_db_hash()
 
     def save_db_hash(self):
-        file = open(self.db_hash_path, 'w')
+        hash_file = open(self.db_hash_path, 'w')
+        signature_file = open(self.db_hash__signature_path, 'w')
+
         db_hash = SHA256.new(str(self.serialized_db).encode()).hexdigest()
         
-        file.write(db_hash)
+        signed_hash = RSACipher.sign(db_hash, CA.get_private_key("users-db"))
+        
+        hash_file.write(db_hash)
+        signature_file.write(signed_hash)
 
     @property
     def serialized_db(self):
