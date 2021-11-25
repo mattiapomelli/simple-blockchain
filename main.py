@@ -8,6 +8,9 @@ from exceptions import ConflictError, NotFoundError, InvalidCredentialsError
 from currency import Currency
 from certificates import CA
 from rsa import RSACipher
+from aes import AESCipher
+from Crypto.Random import get_random_bytes
+from base64 import b64encode
 import random
 import string
 
@@ -158,21 +161,36 @@ def main():
 
             reason = input('Enter reason: ')
 
+            # ---- HYBRID ENCRYPTION ----
             # Get the certificate of the receiver
             receiver_cert = CA.get_certificate(receiver_username)
 
-            # TODO: verify cert
+            # Verify the certificate of the receiver
+            CA.verify_certificate(receiver_cert)
+            
             # Get the receiver public key from his/her certificate
             receiver_pub_key = CA.get_public_key(receiver_cert)
 
-            # Encrypt the reason of the transaction with the receiver's public key
-            encrypted_reason = RSACipher.encrypt(reason, receiver_pub_key)
+            # Generate a random session key
+            session_key_bytes = get_random_bytes(16)
+            # Convert it from bytes to string
+            session_key = b64encode(session_key_bytes).decode("utf-8")
+
+            # Asymmetrically encrypt the session key with the receiver's public key
+            encrypted_session_key = RSACipher.encrypt(session_key, receiver_pub_key)
+
+            # Symmetrically encrypt the reason of the transaction with the session key
+            encrypted_reason = AESCipher.encrypt(reason, session_key)
+
+            # Append the encrypted session key to the encrypted reason, so that the receiver
+            # can obtain it
+            stored_reason = encrypted_reason + encrypted_session_key
 
             transaction = Transaction(
                 auth.user.username,
                 receiver_username,
                 int(amount),
-                encrypted_reason,
+                stored_reason,
                 is_encrypted= True
             )
 
@@ -217,12 +235,22 @@ def main():
                 Printer.error("The transaction is not encrypted")
                 continue
             
+            # ---- HYBRID DECRYPTION ----
             # Get private key of the logged user
             private_key = CA.get_private_key(auth.user.username)
 
+            # Extract the encrypted session key from the stored transaction reason
+            encrypted_session_key = transaction.reason[-344:]
+
+            # Extract the encrypted reason from the stored transaction reason
+            encrypted_reason = transaction.reason[:-344]
+
             try:
-                # Decrypt the reason of the transaction with the private key of the logged user
-                decrypted_reason = RSACipher.decrypt(transaction.reason, private_key)
+                # Asymmetrically decrypt the session key with the private key of the logged user
+                decrypted_session_key = RSACipher.decrypt(encrypted_session_key, private_key)
+
+                # Symmetrically decrypt the reason of the transaction with the obtainde session key
+                decrypted_reason = AESCipher.decrypt(encrypted_reason, decrypted_session_key)
                 
                 Printer.info("Reason of the transaction: ", end="")
                 print(decrypted_reason)

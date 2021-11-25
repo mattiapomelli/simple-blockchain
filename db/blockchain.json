@@ -2,9 +2,9 @@
     {
         "index": 0,
         "transactions": [],
-        "timestamp": 1637750610527,
+        "timestamp": 1637847274592,
         "previous_hash": "000",
-        "nonce": 4448
+        "nonce": 3027
     },
     {
         "index": 1,
@@ -15,14 +15,14 @@
                 "receiver": "mattia",
                 "amount": 10,
                 "reason": "mining reward",
-                "timestamp": 1637750973853,
+                "timestamp": 1637847297749,
                 "is_encrypted": false,
                 "signature": null
             }
         ],
-        "timestamp": 1637750973853,
-        "previous_hash": "0001f03f041b6114c15a2b208a1ad57675553b4f635c35072c2721b2253f83dc",
-        "nonce": 13130
+        "timestamp": 1637847297749,
+        "previous_hash": "000b3168e1afaab259e8d4329b0a79417ef7fef56624c6f774e0469cd3439fac",
+        "nonce": 2307
     },
     {
         "index": 2,
@@ -32,10 +32,10 @@
                 "sender": "mattia",
                 "receiver": "stefano",
                 "amount": 5,
-                "reason": "Hc8wXj/ge+jTTsVft1yjwL3HD6tQCMPw22m8TyC8Ac10Be7mn40rqHICZnIOBiNS4MK1KykdHRSp3IsRPcbjDunV9+k/TTo8n6gS4H6dwgVZfuHw9Qby0G6T0akjphFvBlqnFuoEEVBRHj4TF2RQ81c+a/9F9BObqpUy/68YnGS625vk5u+0GEWNxaIqkXEISMraBCc26KY28vYhJI5OAKCJP1SJjzQo/RNRduS11MmL8U7aRho5LJ71B5+oDeWW3Sqy4kmBpyDM8v83anTcVUpCPhvL8D/1lH8dMtWywI/LOcU/6A0E7ZLoFzHgVvIASmXrvKNh4Wepn70ttCHI2A==",
-                "timestamp": 1637750982988,
+                "reason": "bfaPoGfx5G9t2x12JFktGQB3bju0RoIZUA1Hhqj13ic=XneKu89F9mYFS9vVtSnRPchevMUL41k129uVcH6DmCA8nb7dpl3Se6QFZ61JNSXopOK1zvyJVDru5wwqEZQKj20Q2zIHaNBxc1kJeNRMyC5URZHXojciswu5LXtqDJ/4vKP/bILamGiOwfLjvrXMXRWT86lJG++EQQmu7CYnRqDnBBfOeAnbQ2ytei8bF88LlZrBNOWmkxFTj5Kjdge03ZiIiUqxXVqSJtPuawaQ+Ow03oWq4ThR1M7RN2v/BEPmpmzp+DtO9bKcxm7Ecn99DPupBGSzalHWVeLB9Ax62f1b9dcn4OTC+lPLjEkdBWYI4i5o19UlQ203J3qHYdtMHQ==",
+                "timestamp": 1637847309186,
                 "is_encrypted": true,
-                "signature": "97f74ddc17fbef789fa1675672adbe0fd1b4799f534a61d7fedca296016c026886b7d2d6050562a68f5d3092f59db5223d493e972ded87df2d6ccd0a0aebd4fa5c7e7f8568802e499b828738575e2c2c314f5ecfaf76a1c8d558e115d36f1d35d43bbdf059c0aaedc1583501c5cf3e76b76b4420fc9bc047737b89629ffc6aafd091b7e19ca0d784866e098aebfad5903d4012a20bdae8523217f8badb216793e4fa0138f710281e89036b7c2316f99ea7fa3cfd3780acafefbee3abd86d59cfc05e2e7cb8bbea04b5f2c1331e4821cf6ca64d5a75c749275f6bee91d8d2b62e1cdf17e1052272b6dfeb501159e8f8a826b8b04f8f1c427b664738ed0968e40d"
+                "signature": "766c30acd3f32a0cf5f9f59d380576748abe6b4fa5ada6244e79cd899b3cc7ef9a45bbbb8898066c7d500b9e1000120d038722155671fe458cf4a86e1dd37424a7aef3c9c7355164c51f90af4ddc624adc3179ec1fa10dda1e809cb4dba3d3e948a41681dfb4557fd073c3a485867ad90bb209f74050ed61437600044faf54a73801d8bdc27a6df49e68d75fb0b31e586bcb59c38a0cf1bc3703ac8707bbc3809d868a7ef8aacd63ff26d27df4f16ad858e80ce34a92423959dc50433c8e4c25d413e1c2d025cbc9ad394808f5dcffb93ccba81ff11707d7ab8ff6eef0eaa84cb2b7870c000255d7cf454b6502f4cd5ec2c754b38aa895754033fa1d310f6c99"
             },
             {
                 "id": 2,
@@ -43,59 +43,13 @@
                 "receiver": "mattia",
                 "amount": 10,
                 "reason": "mining reward",
-                "timestamp": 1637751017641,
+                "timestamp": 1637847316861,
                 "is_encrypted": false,
                 "signature": null
             }
         ],
-        "timestamp": 1637751017641,
-        "previous_hash": "000a705bd7c94bbf1d054615fa51ba2162343b5c782cc878fb2a56d01e68b68b",
-        "nonce": 4498
-    },
-    {
-        "index": 3,
-        "transactions": [
-            {
-                "id": 3,
-                "sender": null,
-                "receiver": "stefano",
-                "amount": 10,
-                "reason": "mining reward",
-                "timestamp": 1637751029461,
-                "is_encrypted": false,
-                "signature": null
-            }
-        ],
-        "timestamp": 1637751029462,
-        "previous_hash": "000522f1f356f017cf6fe74e2b0f2ac9cd5f889ed6d4f2da9124c8eb4777b832",
-        "nonce": 13086
-    },
-    {
-        "index": 4,
-        "transactions": [
-            {
-                "id": 4,
-                "sender": "stefano",
-                "receiver": "mattia",
-                "amount": 10,
-                "reason": "hObGsHMSdFWmZFRnRAou5p+ID1/eL99aMHVqIUJU/7u3YdVeBiB0m+3deVlqKhLLcrOzQpbiQXYsvbaBfx5k5YhGtMQ3KXNYxgPU/wz9NMoee5Dmn5Lar8vrkpFoyjCV/rzTEvN6l6KoN2M6xBcvUlIJpG3ViLWjdgt7LavlNVXNWu7yasXIIURPtdMc2ZvRM52afmxlBnyf7wf52JYK3Xbk4pb1GYfh3HycQCth2p0wRo4FGW97pBct9fWnPl4G/EBo/npB/O07obUrcUgjm8sEiTXjbPzMgkS/krnlB7lS+uzlwQij8qGkjnFCM2HUOgFzZ7ivF8Eal0TvNooCZw==",
-                "timestamp": 1637751165599,
-                "is_encrypted": true,
-                "signature": "2378058786e80b59a858e1ed91672f162f35ab788091e5315ba83682c3cdb27e7c6feb11d7d09ac349aaf73b12e594deb13a27cb77eeef683f58f77e2a860684fab4ee9bc317d78ca13f0c38038087d0019cefeb38d3e8cff3e618aca8dbe448c43948ffafccd3fc4bce3fcbe3cfcf5d151d60774d4a911f45c570f49c5fcc76d1c932372e52c09a61a3e71bd54012b44ae0102c5aca96e3aa62bf505ff342715838d139b7071270e8b234e8670d11dc46747550edcac7f57c09a025d3fc6719becc7a9d22250a6fdf7f5e0f2440475b377063a2c3ff33e92cefef9e86ba1924aaa33a32cfc84c00acd85e7aca6fa2ef45bc89f9029db64e5327f440a6c8c7cd"
-            },
-            {
-                "id": 5,
-                "sender": null,
-                "receiver": "stefano",
-                "amount": 10,
-                "reason": "mining reward",
-                "timestamp": 1637751174164,
-                "is_encrypted": false,
-                "signature": null
-            }
-        ],
-        "timestamp": 1637751174164,
-        "previous_hash": "0005fb2fc8b0fd5d84fb6181de28567e64874c43d0ca514dcb14b514e063bb1e",
-        "nonce": 4555
+        "timestamp": 1637847316862,
+        "previous_hash": "000478b82fc2233eaa924659640f3e4896cd1ec7296ba3747955ed2787547984",
+        "nonce": 2504
     }
 ]
