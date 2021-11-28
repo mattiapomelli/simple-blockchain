@@ -47,10 +47,8 @@ class RSACipher:
         # Sign the hash of the message
         signature = pkcs1_15.new(rsa_key).sign(hash)
 
-        # Convert the signature from bytes to an hex string 
-        hex_signature = signature.hex()
-
-        return hex_signature
+        # Convert the signature from bytes to a base64 string
+        return b64encode(signature).decode("utf-8")
     
     @staticmethod
     def verify(message, signature, public_key):
@@ -60,8 +58,8 @@ class RSACipher:
         # Compute the hash of the message
         hash = SHA256.new(message.encode())
 
-        # Convert signature from an hex string to bytes
-        signature_bytes = bytes.fromhex(signature)
+        # Convert signature from a base64 string to bytes
+        signature_bytes = b64decode(signature)
 
         try:
             pkcs1_15.new(rsa_key).verify(hash, signature_bytes)

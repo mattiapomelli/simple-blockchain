@@ -1,6 +1,5 @@
 import json
 
-from OpenSSL.crypto import sign
 from user import User
 from Crypto.Hash import SHA256
 from printer import Printer
