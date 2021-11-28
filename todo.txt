@@ -1,5 +1,15 @@
+CHECK:
+    - best certificate validity period
+    - aes key length
+    - kdf number of iterations
+
+BUGS:
+    - In AES if key is too long (greater then 128 bits?) gives an error
+
 REPORT:
-[ ] Authentication:
+[X] How to run the app
+
+[X] Authentication:
       - tell which authentication method we are using
       - tell the reason why we use a particular authentication method over the other ones
 
@@ -7,12 +17,12 @@ REPORT:
       - we cannot take the key length for granted. We have to specify why we are using
         a specific key length. (Same for RSA?)
 
-[ ] Private keys:
+[X] Private keys:
       - specify that we assume that the private keys are stored on each user's system an not
         in a shared folder. So only owners can access them.
 
 CONCEPTS TO USE:
-[ ] File Integrity:
+[X] File Integrity:
       - we should verify the integrity of the files used: check that has not been corrupted when
         starting the application
         - compute its hash every time that the file is changed and stored it somewhere
@@ -53,13 +63,6 @@ CONCEPTS TO USE:
       - Block hashes
       - Store passwords
 
-DOUBTS
-- Who should be the signer of the certificate?
-- What fields should I add to the certificate?
-- How to verify only one certificate? It wants the chain
-- Is ok to use base64 to encode? Or better hex?
-- Is correct to encrypt personal data using plain password instead of hash?
-
 
 FEATURES:
   - DONE:
@@ -97,12 +100,7 @@ FEATURES:
     - Better error handling in cli input:
         - username, password: must be longer than tot characters
 
-BUGS
-- check that key length is not greater then 128 bits
-- what happens if no padding is needed in AES? THe unpad method will remove something anyways?
-
 CODING FEATURES/OPTIMIZATIONS
-- Documentation in certificates (rename to ca.py)
 - move decrypt_data to users_db or user
 
 - don't print signature in reward Transactions
