@@ -7,9 +7,10 @@ class CertificationAuthority:
     public key certificates to be used for asymmetric encryption.
     """
 
+    key_ca = None
+
     def __init__(self):
         self.cert_ca = self.create_own_certificate()
-        # self.cert_intermediate = self.create_intermediate_certificate()
     
     def create_own_certificate(self):
         """
@@ -25,6 +26,7 @@ class CertificationAuthority:
             # Generate an RSA key pair
             k = crypto.PKey()
             k.generate_key(crypto.TYPE_RSA, 2048)
+            self.key_ca = k
 
             # Create a X509 certificate and add the fields.
             cert = crypto.X509()
@@ -60,8 +62,8 @@ class CertificationAuthority:
         cert.set_issuer(self.cert_ca.get_subject()) 
         cert.set_pubkey(k)
 
-        # Sign the certificate
-        cert.sign(k, 'sha256')
+        # Sign the certificate with the key of the certification authority
+        cert.sign(self.get_private_key_object("ca"), 'sha256')
 
         # Store the user's certificate and private key in files
         open(f"certificates/{username}-cert.cer", 'wb').write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
@@ -117,7 +119,7 @@ class CertificationAuthority:
 
     def get_private_key(self, username):
         """
-        Gets and returns the private key of the user with the given username
+        Gets and returns the private key of the user with the given username. It returns it as a string
         """
         # Get the private key from the corresponding file
         key_file = open(f"keys/{username}-private.key", 'r')
@@ -126,6 +128,17 @@ class CertificationAuthority:
 
         priv_key = crypto.load_privatekey(crypto.FILETYPE_PEM, key_data)
         return crypto.dump_privatekey(crypto.FILETYPE_PEM, priv_key)
+
+    def get_private_key_object(self, username):
+        """
+        Gets and returns the private key of the user with the given username. It returns it as a PKey object
+        """
+        # Get the private key from the corresponding file
+        key_file = open(f"keys/{username}-private.key", 'r')
+        key_data = key_file.read()
+        key_file.close()
+
+        return crypto.load_privatekey(crypto.FILETYPE_PEM, key_data)
 
     @property
     def public_key_ca(self):
