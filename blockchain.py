@@ -82,7 +82,7 @@ class Blockchain:
             # Check that the block hash is valid
             hash = block.compute_hash()
             if not hash.startswith('0' * self.difficulty):
-                raise InvalidBlockchainError(f"Block number {block.index} has an unvalid hash")
+                raise InvalidBlockchainError(f"Block number {block.index} has an unvalid hash: {hash}")
 
     def proof_of_work(self, block):
         """

@@ -104,4 +104,11 @@ class Transaction:
             colored_sender = Printer.get_info(self.sender)
             main_text = f"{colored_sender} paid {colored_receiver}"
 
-        return f"Id: {self.id} - {main_text} {self.amount}$, reason: {self.reason}, Signature: {self.signature}"
+        res = f"{Printer.get_cyan('Id:')} {self.id} - {main_text}"
+        res += Printer.get_cyan(f" {self.amount}$")
+        res += f", {Printer.get_cyan('reason')}: {self.reason}"
+
+        if not self.is_reward_transaction():
+            res += f", {Printer.get_cyan('Signature')}: {self.signature}"
+
+        return res

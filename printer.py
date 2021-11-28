@@ -21,3 +21,7 @@ class Printer:
     @staticmethod
     def get_info(text):
         return Fore.LIGHTYELLOW_EX + text + Style.RESET_ALL
+
+    @staticmethod
+    def get_cyan(text):
+        return Fore.LIGHTCYAN_EX + text + Style.RESET_ALL
