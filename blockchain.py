@@ -2,6 +2,7 @@ from block import Block
 from transaction import Transaction
 from exceptions import OverspendingError, InvalidBlockchainError
 from blocks_db import blocks_db
+from printer import Printer
 
 class Blockchain:
     """
@@ -31,6 +32,12 @@ class Blockchain:
             self.create_genesis_block()
         else:
             self.chain = list(saved_blockchain)
+
+        try:
+            self.validate_chain()
+        except InvalidBlockchainError as e:
+            Printer.error("Invalid Blockchain: "+ str(e))
+            exit()
 
         self.pending_transactions = []
 

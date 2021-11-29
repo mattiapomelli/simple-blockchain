@@ -271,6 +271,7 @@ def main():
                 Printer.success("You have been rewarded with " + str(blockchain.reward_amount) + "$")
             except InvalidBlockchainError as e:
                 Printer.error("Invalid Blockchain: "+ str(e))
+                exit()
 
         # print the blockchain
         elif command == 'b':
