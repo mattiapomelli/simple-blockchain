@@ -35,7 +35,10 @@ class UserDB:
             self.cert = stored_cert
         
         try:
-            data = json.load(file)
+            try:
+                data = json.load(file)
+            except:
+                data = file.read()
 
             # Compute the hash of the file content
             db_hash = SHA256.new(str(data).encode()).hexdigest()
@@ -65,7 +68,8 @@ class UserDB:
             self.save_db_hash()
         except SystemExit:
             exit()
-        except:
+        except Exception as e:
+            print(e)
             self.reset()
 
     def create(self, username, password, email, phone_nr, address):
