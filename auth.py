@@ -37,7 +37,7 @@ class Auth:
         salt = get_random_bytes(16)
 
         # Hash the password with PBKDF2 and the generated salt
-        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=1000000, hmac_hash_module=SHA256)
+        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=310000, hmac_hash_module=SHA256)
 
         # Convert the hashed password from bytes to string, after appending the salt at the end
         hashed_password = b64encode(hashed_password_bytes + salt).decode("utf-8")
@@ -65,7 +65,7 @@ class Auth:
         salt = stored_password_bytes[-16:]
 
         # Hash the provided password with PBKDF2 and the obtained salt
-        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=1000000, hmac_hash_module=SHA256)
+        hashed_password_bytes = PBKDF2(password.encode(), salt, 64, count=310000, hmac_hash_module=SHA256)
 
         # Convert the hashed password from bytes to string
         hashed_password = b64encode(hashed_password_bytes  + salt).decode("utf-8")
