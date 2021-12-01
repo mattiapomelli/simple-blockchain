@@ -25,9 +25,9 @@ class Blockchain:
         pending_transactions: transactions that have not been inserted in a block yet.
                               they have to be included in a block to become actually official
         """
-        saved_blockchain = blocks_db.get_blockchain()
+        saved_blockchain, is_valid = blocks_db.get_blockchain()
 
-        if len(saved_blockchain) == 0:
+        if len(saved_blockchain) == 0 and is_valid:
             self.chain = []
             self.create_genesis_block()
         else:
@@ -37,9 +37,12 @@ class Blockchain:
             self.validate_chain()
         except InvalidBlockchainError as e:
             Printer.error("Invalid Blockchain: "+ str(e))
-            exit()
+        finally:
+            if not is_valid:
+                exit()
 
         self.pending_transactions = []
+
 
     def create_genesis_block(self):
         """

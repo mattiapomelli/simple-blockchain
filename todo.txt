@@ -102,6 +102,3 @@ FEATURES:
 
 CODING FEATURES/OPTIMIZATIONS
 - move decrypt_data to users_db or user
-
-- don't print signature in reward Transactions
-- color for fields, and money

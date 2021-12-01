@@ -26,7 +26,6 @@ class UserDB:
     def __init__(self):
         """
         Opens the file representing the db and stores its content in the db attribute.
-        If there is an error opening the file, it resets the db to be empty.
         """
         file = open(self.db_path)
 
@@ -54,7 +53,7 @@ class UserDB:
             # Get the stored signature of the hash
             signature = signature_file.read()
 
-            #Verify that the signature of the hash is valid, using the CA public key
+            # Verify that the signature of the hash is valid, using the CA public key
             db_public_key = CA.get_public_key(self.cert)
 
             is_valid = RSACipher.verify(stored_hash, signature, db_public_key)
@@ -73,7 +72,6 @@ class UserDB:
             exit()
         except Exception as e:
             print(e)
-            self.reset()
 
     def create(self, username, password, email, phone_nr, address):
         """

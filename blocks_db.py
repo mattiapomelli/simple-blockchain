@@ -21,10 +21,13 @@ class BlockchainDB:
 
     def get_blockchain(self):
         """
-        Opens the file representing the db and stores its content in the db attribute.
-        If there is an error opening the file, it resets the db to be empty.
+        Opens the file representing the db and returns its content
+        after deserializing it.
+        Also returns wheter the db file is valid or has been corrupted.
         """
         file = open(self.db_path)
+        is_format_corrupted = False # indicates wheter the db file has been corrupted in a way that cannot be parsed as JSON anymore
+        is_valid = True # indicates wheter the db file is valid or has been corrupted
 
         # Check if a certificate for the database is already present, otherwise create it
         stored_cert = CA.get_certificate("blockchain-db")
@@ -33,70 +36,69 @@ class BlockchainDB:
         else:
             self.cert = stored_cert
         
+        # try:
         try:
-            try:
-                data = json.load(file)
-            except:
-                data = file.read()
+            data = json.load(file)
+        except:
+            is_format_corrupted = True
+            data = file.read()
 
-            # Compute the hash of the file content
-            db_hash = SHA256.new(str(data).encode()).hexdigest()
-            
-            hash_file = open(self.db_hash_path, 'r')
-            signature_file = open(self.db_hash__signature_path, 'r')
-            
-            # Get the stored hash
-            stored_hash = hash_file.read()
-            # Get the stored signature of the hash
-            signature = signature_file.read()
+        # Compute the hash of the file content
+        db_hash = SHA256.new(str(data).encode()).hexdigest()
+        
+        hash_file = open(self.db_hash_path, 'r')
+        signature_file = open(self.db_hash__signature_path, 'r')
+        
+        # Get the stored hash
+        stored_hash = hash_file.read()
+        # Get the stored signature of the hash
+        signature = signature_file.read()
 
-            #Verify that the signature of the hash is valid, using the CA public key
-            db_public_key = CA.get_public_key(self.cert)
+        # Verify that the signature of the hash is valid, using the CA public key
+        db_public_key = CA.get_public_key(self.cert)
 
-            is_valid = RSACipher.verify(stored_hash, signature, db_public_key)
-            if not is_valid:
-                Printer.error("Blockchain database's hash or signature have been corrupted: signature is not valid")
-                raise SystemExit
+        is_signature_valid = RSACipher.verify(stored_hash, signature, db_public_key)
+        if not is_signature_valid:
+            is_valid = False
+            Printer.error("Blockchain database's hash or signature have been corrupted: signature is not valid")
 
-            if db_hash != stored_hash:
-                Printer.error("Blockchain database has has been corrupted: hashes don't match")
-                raise SystemExit
+        if db_hash != stored_hash:
+            is_valid = False
+            Printer.error("Blockchain database has has been corrupted: hashes don't match")
 
+        if is_valid:
             self.save_db_hash(data)
-            
-            blocks = []
+        
+        if is_format_corrupted:
+            return [], False
 
-            for b in data:
-                transactions = []
-                for t in b['transactions']:
-                    transaction = Transaction(
-                        t['sender'],
-                        t['receiver'],
-                        t['amount'],
-                        t['reason'],
-                        t['is_encrypted']
-                    )
-                    transaction.timestamp = t['timestamp']
-                    transaction.signature = t['signature']
-                    transactions.append(transaction)
+        blocks = []
 
-                block = Block(
-                    b["index"],
-                    transactions,
-                    b["previous_hash"],
-                    b["nonce"]
+        for b in data:
+            transactions = []
+            for t in b['transactions']:
+                transaction = Transaction(
+                    t['sender'],
+                    t['receiver'],
+                    t['amount'],
+                    t['reason'],
+                    t['is_encrypted']
                 )
+                transaction.timestamp = t['timestamp']
+                transaction.signature = t['signature']
+                transactions.append(transaction)
 
-                block.timestamp = b['timestamp']
-                blocks.append(block)
-            
-            return blocks
-        except SystemExit:
-            exit()
-        except Exception as e:
-            print(e)
-            self.reset()
-            return []
+            block = Block(
+                b["index"],
+                transactions,
+                b["previous_hash"],
+                b["nonce"]
+            )
+
+            block.timestamp = b['timestamp']
+            blocks.append(block)
+        
+        return blocks, is_valid
 
     def write_blockchain(self, chain):
         """
@@ -136,6 +138,7 @@ class BlockchainDB:
         """
         file = open(self.db_path, 'w')
         file.write(str([]))
+        self.save_db_hash(str([]))
         file.close()
 
 # block database controller that will be used to perform operations on the db
