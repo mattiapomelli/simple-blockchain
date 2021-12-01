@@ -20,8 +20,8 @@ class UserDB:
 
     db = None
     db_path = 'db/users.json'
-    db_hash_path = 'db/users-hash.txt'
-    db_hash__signature_path = 'db/users-hash-signature.txt'
+    db_hash_path = 'hashes/users-hash.txt'
+    db_hash__signature_path = 'hashes/users-hash-signature.txt'
 
     def __init__(self):
         """

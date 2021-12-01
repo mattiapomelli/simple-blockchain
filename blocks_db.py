@@ -16,8 +16,8 @@ class BlockchainDB:
     """
 
     db_path = 'db/blockchain.json'
-    db_hash_path = 'db/blockchain-hash.txt'
-    db_hash__signature_path = 'db/blockchain-hash-signature.txt'
+    db_hash_path = 'hashes/blockchain-hash.txt'
+    db_hash__signature_path = 'hashes/blockchain-hash-signature.txt'
 
     def get_blockchain(self):
         """
