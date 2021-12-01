@@ -13,11 +13,22 @@ from Crypto.Random import get_random_bytes
 from base64 import b64encode
 import random
 import string
+import os
+import sys
 
 def main():
     blockchain = Blockchain()
     auth = Auth()
     currency = Currency()
+
+    if len(sys.argv) > 1 and sys.argv[1] == "--reset":
+        for c in os.listdir("certificates"):
+            if c not in ["ca-cert.cer", "blockchain-db-cert.cer", "users-db-cert.cer"]:
+                os.remove(f"certificates/{c}")
+
+        for c in os.listdir("keys"):
+            if c not in ["ca-private.key", "blockchain-db-private.key", "users-db-private.key"]:
+                os.remove(f"keys/{c}")
 
     def print_list_of_commands():
         commands = {

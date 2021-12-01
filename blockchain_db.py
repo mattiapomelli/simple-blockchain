@@ -5,6 +5,7 @@ from Crypto.Hash import SHA256
 from printer import Printer
 from rsa import RSACipher
 from certificates import CA
+import sys
 
 class BlockchainDB:
     """
@@ -25,6 +26,9 @@ class BlockchainDB:
         after deserializing it.
         Also returns wheter the db file is valid or has been corrupted.
         """
+        if len(sys.argv) > 1 and sys.argv[1] == "--reset":
+            self.reset()
+
         file = open(self.db_path)
         is_format_corrupted = False # indicates wheter the db file has been corrupted in a way that cannot be parsed as JSON anymore
         is_valid = True # indicates wheter the db file is valid or has been corrupted

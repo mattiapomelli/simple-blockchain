@@ -5,6 +5,7 @@ from Crypto.Hash import SHA256
 from printer import Printer
 from rsa import RSACipher
 from certificates import CA
+import sys
 
 class UserDB:
     """
@@ -27,6 +28,9 @@ class UserDB:
         """
         Opens the file representing the db and stores its content in the db attribute.
         """
+        if len(sys.argv) > 1 and sys.argv[1] == "--reset":
+            self.reset()
+            
         file = open(self.db_path)
 
         # Check if a certificate for the database is already present, otherwise create it
