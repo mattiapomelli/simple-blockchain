@@ -1,7 +1,7 @@
 from block import Block
 from transaction import Transaction
 from exceptions import OverspendingError, InvalidBlockchainError
-from blocks_db import blocks_db
+from blockchain_db import blocks_db
 from printer import Printer
 
 class Blockchain:
