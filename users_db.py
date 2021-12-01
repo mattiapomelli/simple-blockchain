@@ -14,6 +14,8 @@ class UserDB:
     db: list of all the users of the system
     db_path: path to the file storing user information
     db_hash_path: path to the file storing the hash of the db
+    db_hash_signature_path: path to the file storing the signature of the hash of the db
+    cert: certificate used by the db to sign its hash
     """
 
     db = None
@@ -28,6 +30,7 @@ class UserDB:
         """
         file = open(self.db_path)
 
+        # Check if a certificate for the database is already present, otherwise create it
         stored_cert = CA.get_certificate("users-db")
         if stored_cert is None:
             self.cert = CA.create_certificate("users-db")
@@ -107,6 +110,10 @@ class UserDB:
         self.save_db_hash()
 
     def save_db_hash(self):
+        """
+        Saves in a file the hash of the database content, and in another file
+        the signature of the hash, signed with the private key of the db
+        """
         hash_file = open(self.db_hash_path, 'w')
         signature_file = open(self.db_hash__signature_path, 'w')
 
