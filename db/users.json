@@ -1,16 +1,23 @@
 [
     {
         "username": "mattia",
-        "password": "5FNE1hm5+LXtZPzJwaSYfkWNLgcqjs4/e0UY1S7PSyaAB9fNWpqpH5biwVNRNxcujav11/96TRBtQ0vHQgpARpb1G0bDQMnYLmZ+SqrtCDc=",
-        "email": "C88/MRxcjDgSdnl/nzzaNeKAU6rRwhk5qODbTG+1mvU=",
-        "phone_nr": "VZpyd0QIym9KJBMV8Hq7Xg==",
-        "address": "NsIqPxQdrzYRZ3QztxLcdKOkXuDAxBA5qODbTG+1mvU="
+        "password": "8wMfyJDB9X3exdziTuLEo8h6jI4Ugqp9JfIEf28O9IvKaoN0AiEyJpwRkeJoaDGQDKoe5TnZ/oGYbdpaKrD88rfBdfEvDi9f5LFzSgTsIaE=",
+        "email": "OE3Kxpsvs6ZW52ByL7fPPB1/UnF3aczKFl66HM7ooBw=",
+        "phone_nr": "YR+LhMB5xvcPsA8YB9KmVw==",
+        "address": "HFjf3otF+MowjQIVCt+rWg=="
     },
     {
-        "username": "stefano",
-        "password": "hOcCK9pb9AfXH3WD7QybmlNRImhOktShQm6OWHHN1bIJy0tV/CIZ/oUOXvYjxaLa+yKqFyW3mAYQv40VTWLKoXNZXnWxRAsn1s0CZOjgGzM=",
-        "email": "FdouIxRTkxcYfnR6mlLeN+7mMIu9ons/rubdSmmznPM=",
-        "phone_nr": "VZp+dEcMxG5HICIn8ni5XA==",
-        "address": "Jcc4KRRak3tfWmFymgW/Wg=="
+        "username": "julian",
+        "password": "/Y2omA1pZSpjkydZOlS6wAQvyTGUKbIE/7afvtOW4DqAcPdRYpSk3/JQ/AynGJ2KUkJ7MUY3yRbcJhP1g8efqNsmnguPLG1c7whSDuSyKaY=",
+        "email": "Ywd4PV98vB0rj4dNInrJNULzBYHz6ujnvYR/ASEsRCY=",
+        "phone_nr": "OkYjYgslzkJ31+gnCh+gXg==",
+        "address": "WR14NVB29nBM5OQrBhOsUg=="
+    },
+    {
+        "username": "bob",
+        "password": "qAix6Z7+DpCEP1O+4Ai5LoXQfbFn6/KHH6TeSdlOVAL30hAXQvk7d06NoXFMRAbd5/yIgMI6+TfsZN6f3gruHgt1hErqWIid4tGRi5yhKIg=",
+        "email": "dLsJfJM0fLlacOnPVmajMg==",
+        "phone_nr": "JeBdC8FvKeYBbYymPWOmNw==",
+        "address": "RaQKVZpSFts9VYGrMG6rOg=="
     }
 ]
